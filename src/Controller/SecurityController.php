@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
 use LogicException;
@@ -12,6 +17,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -33,5 +40,43 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
+     */
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        // Si on n'est pas admin on ne peut pas ajouter un utilisateur
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user, [
+            'user' => $this->getUser()
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+
+            // On encode le password
+            $user->setPassword($passwordEncoder->encodePassword(
+                $user,
+                $form['plainPassword']->getData()
+            ));
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Nouvel utilisateur crée !');
+            return $this->redirectToRoute('app_users');
+        }
+        return $this->render('security/register.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

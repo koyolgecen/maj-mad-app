@@ -31,10 +31,14 @@ security:
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            switch_user: true
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_ALLOWED_TO_SWITCH ]
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # only page login is accesible for anonym
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY } # the rest of the site requires a connection
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

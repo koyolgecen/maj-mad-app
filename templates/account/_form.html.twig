@@ -1,0 +1,54 @@
+{# Formulaire commun pour la création et la modification d'un utilisateur #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">{{ h1 }}</h1>
+    {{ form_start(form, {
+        'attr': {'class': 'form-register' }
+    }) }}
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.nom) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.prenom) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.login) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.email) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.plainPassword) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if form.roles is defined %}
+                {{ form_row(form.roles) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12 mt-3 mb-3">
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

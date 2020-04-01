@@ -34,6 +34,17 @@ class UserFixture extends BaseFixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, "test"));
             return $user;
         });
+
+        $this->createMany(3, 'admin_users', function($i) {
+            $user = new User();
+            $user->setEmail(sprintf("admin%d@madera.fr", $i));
+            $user->setPrenom($this->faker->firstName);
+            $user->setNom($this->faker->lastName);
+            $user->setLogin($this->faker->userName);
+            $user->setPassword($this->passwordEncoder->encodePassword($user, "admin"));
+            $user->setRoles(['ROLE_ADMIN']);
+            return $user;
+        });
         $manager->flush();
     }
 }

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-dark">Mon profil</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-3">
+            <h3>Prénom : {{ app.user.prenom }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-5">
+            <h3>Nom : {{ app.user.nom }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-5">
+            <h3>Nom d'utilisateur : {{ app.user.username }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-5">
+            <h3>Adresse mail : {{ app.user.email }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-5 mb-5 text-center">
+            <a href="{{ path('app_user_edit', {'id':app.user.id}) }}" class="btn btn-success">Modifier</a>
+        </div>
+    </div>
+
+{% endblock %}
