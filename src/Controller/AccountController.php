@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
@@ -41,18 +42,28 @@ class AccountController extends AbstractController
      * @param User $user
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @return RedirectResponse|Response
      */
-    public function edit(User $user, Request $request, EntityManagerInterface $em)
+    public function edit(User $user, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         /** @var User $userConnected */
         $userConnected = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
-            'user' => $userConnected
+            'user' => $userConnected,
+            'modification' => true
         ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!is_null($form['plainPassword']->getData())) {
+                // On encode le password
+                $user->setPassword($passwordEncoder->encodePassword(
+                    $user,
+                    $form['plainPassword']->getData()
+                ));
+            }
 
             $em->persist($user);
             $em->flush();
