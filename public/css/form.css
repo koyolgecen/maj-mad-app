@@ -13,3 +13,6 @@
 .form-signin .form-control:focus {
     z-index: 2;
 }
+.btn:hover {
+    color: pink !important;
+}
