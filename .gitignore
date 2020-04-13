@@ -16,5 +16,5 @@
 ###< symfony/phpunit-bridge ###
 
 .idea
-.env
-.env.test
+/.env
+/.env.test
