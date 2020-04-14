@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Marge;
-use App\Form\MargeType;
+use App\Form\ComposantType;
+use App\Form\FournisseurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MargeController extends AbstractController
+class ComposantController extends AbstractController
 {
     /**
-     * @Route("/marge", name="marge")
+     * @Route("/composants", name="composants")
      */
     public function index()
     {
-        return $this->render('marge/index.html.twig', [
-            'controller_name' => 'MargeController',
+        return $this->render('composant/index.html.twig', [
+            'controller_name' => 'ComposantController',
         ]);
     }
 
     /**
-     * @Route("/marge-add", name="marge_add")
+     * @Route("/composant-add", name="composant_add")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
@@ -30,21 +30,21 @@ class MargeController extends AbstractController
     public function add(Request $request, EntityManagerInterface $em)
     {
         //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
-        $form = $this->createForm(MargeType::class);
+        $form = $this->createForm(ComposantType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Marge $marge */
-            $marge = $form->getData();
+            /** @var FournisseurType $fournisseur */
+            $composant = $form->getData();
 
-            $em->persist($marge);
+            $em->persist($composant);
             $em->flush();
 
-            $this->addFlash('success', 'Nouvelle marge ajouée!');
-            return $this->redirectToRoute('marge');
+            $this->addFlash('success', 'Nouveau composant ajouté!');
+            return $this->redirectToRoute('composants');
         }
 
-        return $this->render('marge/add.html.twig', [
+        return $this->render('composant/add.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,21 @@ class Composant
      * @ORM\JoinColumn(nullable=false)
      */
     private $famille;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Marge", inversedBy="composants")
+     */
+    private $marge;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Fournisseur", inversedBy="composants")
+     */
+    private $fournisseurs;
+
+    public function __construct()
+    {
+        $this->fournisseurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +103,44 @@ class Composant
     public function setFamille(?FamilleComposant $famille): self
     {
         $this->famille = $famille;
+
+        return $this;
+    }
+
+    public function getMarge(): ?Marge
+    {
+        return $this->marge;
+    }
+
+    public function setMarge(?Marge $marge): self
+    {
+        $this->marge = $marge;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Fournisseur[]
+     */
+    public function getFournisseurs(): Collection
+    {
+        return $this->fournisseurs;
+    }
+
+    public function addFournisseur(Fournisseur $fournisseur): self
+    {
+        if (!$this->fournisseurs->contains($fournisseur)) {
+            $this->fournisseurs[] = $fournisseur;
+        }
+
+        return $this;
+    }
+
+    public function removeFournisseur(Fournisseur $fournisseur): self
+    {
+        if ($this->fournisseurs->contains($fournisseur)) {
+            $this->fournisseurs->removeElement($fournisseur);
+        }
 
         return $this;
     }

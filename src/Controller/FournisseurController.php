@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,12 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class FournisseurController extends AbstractController
 {
     /**
-     * @Route("/fournisseur", name="fournisseur")
+     * @Route("/fournisseurs", name="fournisseurs")
      */
     public function index()
     {
+        /** @var Fournisseur[] $fournisseurs */
+        $fournisseurs = $this->getDoctrine()->getRepository(Fournisseur::class)->findAll();
         return $this->render('fournisseur/index.html.twig', [
             'controller_name' => 'FournisseurController',
+            'fournisseurs' => $fournisseurs
         ]);
     }
 
@@ -33,14 +37,14 @@ class FournisseurController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var FournisseurType $fournisseur */
+            /** @var Fournisseur $fournisseur */
             $fournisseur = $form->getData();
 
             $em->persist($fournisseur);
             $em->flush();
 
             $this->addFlash('success', 'Nouveau fournisseur ajouté!');
-            return $this->redirectToRoute('fournisseur');
+            return $this->redirectToRoute('fournisseurs');
         }
 
         return $this->render('fournisseur/add.html.twig', [

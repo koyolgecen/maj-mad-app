@@ -28,6 +28,11 @@ class FamilleComposant
      */
     private $composants;
 
+    public function __toString()
+    {
+       return $this->nomComposant;
+    }
+
     public function __construct()
     {
         $this->composants = new ArrayCollection();
