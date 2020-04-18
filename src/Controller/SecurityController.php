@@ -9,6 +9,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -52,7 +53,6 @@ class SecurityController extends AbstractController
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
-     * @throws TransportExceptionInterface
      */
     public function register(MailerInterface $mailer, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -68,24 +68,30 @@ class SecurityController extends AbstractController
             /** @var User $user */
             $user = $form->getData();
 
+            $passwordNonEncode = $form['plainPassword']->getData();
             // On encode le password
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
-                $form['plainPassword']->getData()
+                $passwordNonEncode
             ));
 
             $em->persist($user);
             $em->flush();
 
             $email = (new TemplatedEmail())
-                ->from('no-reply@madera.fr')
-                ->to($user->getEmail())
-                ->subject('Bienvenue chez MADERA !')
+                ->from(new Address('no-reply@madera.fr', 'MADERA'))
+                ->to(new Address($user->getEmail(), $user->getPrenom()))
+                ->subject('Votre compte chez MADERA')
                 ->htmlTemplate('email/welcome.html.twig')
                 ->context([
-                    'user' => $user
+                    'user' => $user,
+                    'password' => $passwordNonEncode
                 ]);
-            $mailer->send($email);
+
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+            }
 
             $this->addFlash('success', 'Nouvel utilisateur crée !');
             return $this->redirectToRoute('app_users');
