@@ -145,15 +145,24 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text pb20" style="color:#666666; font-family:'Roboto', Arial,sans-serif; font-size:16px; line-height:28px; text-align:left; padding-bottom:20px;">
+                                                                        Vous étiez rajouté en tant que
+                                                                        <b>
+                                                                            {% if "ROLE_COMMERCIAL" in user.roles %}
+                                                                                Commercial
+                                                                            {% elseif "ROLE_BUREAU_DETUDE" in user.roles %}
+                                                                                Personnel du bureau d'étude
+                                                                            {% elseif "ROLE_ADMIN" in user.roles %}
+                                                                                Administrateur
+                                                                            {% endif %}
+                                                                        </b> dans notre équipe.
                                                                         MAJ-MAD est encore plus belle avec vous.
-                                                                        Maintenant vous faites partie de notre équipe!
                                                                         <br>
                                                                         Voici le rappel de vos informations de connexion :
                                                                         <br>
-                                                                        <br>
                                                                         Identifiant : <b>{{ user.login }}</b>
                                                                         <br>
-                                                                        Mot de passe : <i>{{ password }}</i>
+                                                                        Mot de passe : <b>{{ password }}</b>
+                                                                        <br>
                                                                         Vous pouvez à tout moment modifier votre mot de passe à partir de votre profil.
                                                                     </td>
                                                                 </tr>
@@ -290,7 +299,9 @@
                                                         <th class="column-top" width="320" bgcolor="#ffffff" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr>
-                                                                    <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;"><img src="{{ email.image('@images/email/t9_image4.jpg') }}" width="320" height="238" border="0" alt="" /></td>
+                                                                    <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;">
+                                                                        <img src="{{ email.image('@images/email/t9_image4.jpg') }}" width="320" height="238" border="0" alt="" />
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="p30" style="padding:30px;">
