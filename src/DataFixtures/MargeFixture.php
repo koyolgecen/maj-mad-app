@@ -14,7 +14,7 @@ class MargeFixture extends BaseFixture
     {
         $this->createMany(20, 'marge', function() {
             $marge = new Marge();
-            // TODO mithat set nom
+            $marge->setNom($this->faker->realText(40));
             $marge->setMargeCommerciale($this->faker->randomFloat(2, 0, 1));
             $marge->setMargeEntreprise($this->faker->randomFloat(2, 0, 1));
             return $marge;
