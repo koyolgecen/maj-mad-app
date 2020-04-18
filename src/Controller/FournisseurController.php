@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class FournisseurController extends AbstractController
 {
     /**
-     * @Route("/fournisseurs", name="fournisseurs")
+     * @Route("/fournis", name="fournisseurs")
      */
     public function index()
     {
@@ -32,7 +32,7 @@ class FournisseurController extends AbstractController
 
 
     /**
-     * @Route("/fournisseurss", name="app_fournisseurs")
+     * @Route("/fournisseurs", name="app_fournisseurs")
      */
     public function fournisseurs()
     {
