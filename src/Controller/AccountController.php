@@ -37,13 +37,13 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/user/edit/{id}", name="app_user_edit")
-     *
      * @param User $user
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return RedirectResponse|Response
+     *
+     * @Route("/user/edit/{id}", name="app_user_edit")
      */
     public function edit(User $user, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -77,6 +77,17 @@ class AccountController extends AbstractController
             'form' => $form->createView(),
             'user' => $user
         ]);
+    }
+
+
+    /**
+     * @param User $user
+     * @param EntityManagerInterface $em
+     *
+     * @Route("/user/delete/{id}", name="app_user_delete")
+     */
+    public function delete(User $user, EntityManagerInterface $em)
+    {
 
     }
 }

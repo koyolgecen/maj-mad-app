@@ -59,7 +59,11 @@ class UserType extends AbstractType
                     'Admin' => 'ROLE_ADMIN'
                 ],
                 'label' => 'Rôles',
-                'multiple' => true
+                'multiple' => true,
+                'expanded' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-custom checkbox-inline'
+                ]
             ]);
         }
     }
