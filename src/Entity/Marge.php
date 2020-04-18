@@ -21,6 +21,11 @@ class Marge
     /**
      * @ORM\Column(type="float")
      */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
     private $MargeEntreprise;
 
     /**
@@ -38,8 +43,7 @@ class Marge
      */
     public function __toString()
     {
-        // TODO mithat change nom
-        return (string) $this->id;
+        return (string) $this->nom;
     }
 
     public function __construct()
@@ -50,6 +54,17 @@ class Marge
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getMargeEntreprise(): ?float
