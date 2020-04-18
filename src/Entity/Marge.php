@@ -19,12 +19,12 @@ class Marge
     private $id;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="float")
      */
     private $MargeEntreprise;
 

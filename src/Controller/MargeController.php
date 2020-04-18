@@ -81,7 +81,6 @@ class MargeController extends AbstractController
      */
     public function edit(Marge $marge, Request $request, EntityManagerInterface $em)
     {
-
         $form = $this->createForm(MargeType::class, $marge);
 
         $form->handleRequest($request);
@@ -96,8 +95,6 @@ class MargeController extends AbstractController
             ]);
         }
 
-
-
         return $this->render('marge/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $marge
@@ -109,11 +106,9 @@ class MargeController extends AbstractController
      * @Route("/marge/delete/{id}", methods={"DELETE"})
      * @param EntityManagerInterface $em
      * @param Request $request
-     * @return RedirectResponse|Response
      */
-
-    public function  delete(Request $request, $id){
-
+    public function delete(Request $request, $id)
+    {
         $marges = $this->getDoctrine()->getRepository( Marge::class)->find($id);
 
         $em = $this->getDoctrine()->getManager();
@@ -122,6 +117,5 @@ class MargeController extends AbstractController
 
         $response = new Response();
         $response->send();
-
     }
 }
