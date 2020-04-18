@@ -41,6 +41,7 @@ class AccountController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $passwordEncoder
+     *
      * @return RedirectResponse|Response
      *
      * @Route("/user/edit/{id}", name="app_user_edit")
@@ -84,10 +85,16 @@ class AccountController extends AbstractController
      * @param User $user
      * @param EntityManagerInterface $em
      *
+     * @return RedirectResponse
+     *
      * @Route("/user/delete/{id}", name="app_user_delete")
      */
     public function delete(User $user, EntityManagerInterface $em)
     {
+        $em->remove($user);
+        $em->flush();
 
+        $this->addFlash('success', 'Utilisateur supprimé avec succès !');
+        return $this->redirectToRoute('app_users');
     }
 }
