@@ -51,13 +51,17 @@
                            href="{{ path('app_user_edit', { 'id': user.id }) }}">
                             <i class="fas fa-user-edit fa-sm"></i>
                         </a>
+                        <a class="btn btn-danger btn-sm"
+                                href="{{ path('app_user_delete', { 'id': user.id }) }}"
+                                title="Supprimer {{ user.username }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
                     </th>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-
 {% endblock %}
 
 {% block javascripts %}

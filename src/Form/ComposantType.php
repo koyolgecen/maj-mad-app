@@ -29,7 +29,10 @@ class ComposantType extends AbstractType
             ->add('fournisseurs', EntityType::class, [
                 'class' => Fournisseur::class,
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-custom'
+                ]
             ])
         ;
     }
