@@ -14,29 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class MargeController extends AbstractController
 {
     /**
-     * @Route("/marge", name="marge")
-     */
-    public function index()
-    {
-        /** @var Marge[] $marges */
-        $marges = $this->getDoctrine()->getRepository(Marge::class)->findAll();
-        return $this->render('marge/index.html.twig', [
-            'controller_name' => 'MargeController',
-            'marges' => $marges
-        ]);
-    }
-
-
-    /**
-     * @Route("/marges", name="app_marges")
+     * @Route("/marges", name="marges")
      */
     public function marges()
     {
-        $this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
+        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var Marge[] $marges */
         $marges = $this->getDoctrine()->getRepository( Marge::class)->findAll();
 
-        return $this->render('marges/all_marges.html.twig', [
+        return $this->render('marge/all_marges.html.twig', [
             'marges' => $marges
         ]);
     }
@@ -61,8 +47,8 @@ class MargeController extends AbstractController
             $em->persist($marge);
             $em->flush();
 
-            $this->addFlash('success', 'Nouvelle marge ajouée!');
-            return $this->redirectToRoute('marge');
+            $this->addFlash('success', 'Nouvelle marge ajoutée!');
+            return $this->redirectToRoute('marges');
         }
 
         return $this->render('marge/add.html.twig', [
@@ -103,19 +89,18 @@ class MargeController extends AbstractController
     }
 
     /**
-     * @Route("/marge/delete/{id}", methods={"DELETE"})
+     * @param Marge $marge
      * @param EntityManagerInterface $em
-     * @param Request $request
+     *
+     * @Route("/marge/delete/{id}", name="marge_delete")
+     * @return RedirectResponse
      */
-    public function delete(Request $request, $id)
+    public function delete(Marge $marge, EntityManagerInterface $em)
     {
-        $marges = $this->getDoctrine()->getRepository( Marge::class)->find($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($marges);
+        $em->remove($marge);
         $em->flush();
 
-        $response = new Response();
-        $response->send();
+        $this->addFlash('success', 'Marge supprimée avec succès !');
+        return $this->redirectToRoute('marges');
     }
 }

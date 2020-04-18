@@ -14,7 +14,7 @@
         Marges
     </h1>
     <div class="text-center mb-3">
-        <a class="btn btn-success" href="{{ path('app_marge_add') }}">
+        <a class="btn btn-success" href="{{ path('marge_add') }}">
             <i class="fas fa-plus mr-2"></i>Ajouter une nouvelle marge
         </a>
     </div>
@@ -25,29 +25,27 @@
                 <th>Nom</th>
                 <th>Marge entreprise</th>
                 <th>Marge commerciale</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for marge in marges %}
                 <tr>
-                    <td>{{marge.nom}}</td>
-                    <td>{{marge.MargeEntreprise}}</td>
-                    <td>{{fournisseur.MargeCommerciale}}</td>
+                    <td>{{ marge.nom }}</td>
+                    <td>{{ marge.MargeEntreprise }}</td>
+                    <td>{{ marge.MargeCommerciale }}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ marge.nom }}"
                            href="{{ path('app_marge_edit', { 'id': marge.id }) }}">
-                            <i class="fas fa-user-edit fa-sm"></i>
+                            <i class="fas fa-edit fa-sm"></i>
                         </a>
-
-                        <a style="margin-left: 20px"
-                           class="btn btn-danger delete-marge"
+                        <a class="btn btn-danger btn-sm ml-1"
                            data-toggle="tooltip" title="Supprimer {{ marge.nom }}"
-                           href="#"
-                           data-id="{{ marge.id }}"
-                           >
-                            <i class="fas fa-user-minus fa-sm"></i>
-                            </a>
+                           href="{{ path('marge_delete', {'id': marge.id })}}"
+                           onclick="return confirm('are u sure?')">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -62,7 +60,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#marges').DataTable();
