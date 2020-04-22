@@ -27,12 +27,13 @@ class MargeController extends AbstractController
         ]);
     }
 
-
     /**
-     * @Route("/marge-add", name="marge_add")
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @return Response
+     *
+     * @Route("/marge-add", name="marge_add")
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
@@ -58,12 +59,14 @@ class MargeController extends AbstractController
 
 
     /**
-     * @Route("/marge/edit/{id}", name="app_marge_edit")
-     *
      * @param Marge $marge
      * @param Request $request
      * @param EntityManagerInterface $em
+     *
      * @return RedirectResponse|Response
+     *
+     * @Route("/marge/edit/{id}", name="app_marge_edit")
+     *
      */
     public function edit(Marge $marge, Request $request, EntityManagerInterface $em)
     {
@@ -85,15 +88,15 @@ class MargeController extends AbstractController
             'form' => $form->createView(),
             'user' => $marge
         ]);
-
     }
 
     /**
      * @param Marge $marge
      * @param EntityManagerInterface $em
      *
-     * @Route("/marge/delete/{id}", name="marge_delete")
      * @return RedirectResponse
+     *
+     * @Route("/marge/delete/{id}", name="marge_delete")
      */
     public function delete(Marge $marge, EntityManagerInterface $em)
     {

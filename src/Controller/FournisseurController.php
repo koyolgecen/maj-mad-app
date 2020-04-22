@@ -14,25 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class FournisseurController extends AbstractController
 {
     /**
-     * @Route("/fournis", name="fournisseurs")
-     */
-    public function index()
-    {
-        /** @var Fournisseur[] $fournisseurs */
-        $fournisseurs = $this->getDoctrine()->getRepository(Fournisseur::class)->findAll();
-        return $this->render('fournisseur/index.html.twig', [
-            'controller_name' => 'FournisseurController',
-            'fournisseurs' => $fournisseurs
-        ]);
-    }
-
-
-    /**
      * @Route("/fournisseurs", name="app_fournisseurs")
      */
     public function fournisseurs()
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var Fournisseur[] $fournisseurs */
         $fournisseurs = $this->getDoctrine()->getRepository( Fournisseur::class)->findAll();
 
@@ -42,10 +28,12 @@ class FournisseurController extends AbstractController
     }
 
     /**
-     * @Route("/fournisseur-add", name="app_fournisseur_add")
      * @param Request $request
      * @param EntityManagerInterface $em
+     *
      * @return Response
+     *
+     * @Route("/fournisseur-add", name="app_fournisseur_add")
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
@@ -70,16 +58,16 @@ class FournisseurController extends AbstractController
     }
 
     /**
-     * @Route("/fournisseur/edit/{id}", name="app_fournisseur_edit")
-     *
      * @param Fournisseur $fournisseur
      * @param Request $request
      * @param EntityManagerInterface $em
+     *
      * @return RedirectResponse|Response
+     *
+     * @Route("/fournisseur/edit/{id}", name="app_fournisseur_edit")
      */
     public function edit(Fournisseur $fournisseur, Request $request, EntityManagerInterface $em)
     {
-
         $form = $this->createForm(FournisseurType::class, $fournisseur);
 
         $form->handleRequest($request);
@@ -94,20 +82,17 @@ class FournisseurController extends AbstractController
             ]);
         }
 
-
-
         return $this->render('fournisseur/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $fournisseur
         ]);
-
     }
 
     /**
-     * @Route("/fournisseur/delete/{id}", methods={"DELETE"})
-     * @param EntityManagerInterface $em
+     * @param $id
      * @param Request $request
-     * @return RedirectResponse|Response
+     *
+     * @Route("/fournisseur/delete/{id}", methods={"DELETE"})
      */
     public function delete(Request $request, $id){
 
@@ -119,7 +104,5 @@ class FournisseurController extends AbstractController
 
         $response = new Response();
         $response->send();
-
     }
-
 }

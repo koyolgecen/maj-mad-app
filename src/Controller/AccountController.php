@@ -91,10 +91,13 @@ class AccountController extends AbstractController
      */
     public function delete(User $user, EntityManagerInterface $em)
     {
-        $em->remove($user);
-        $em->flush();
-
-        $this->addFlash('success', 'Utilisateur supprimé avec succès !');
+        if ($user === $this->getUser()) {
+            $this->addFlash('danger', sprintf('Vous êtes connecté en tant que %s vous ne pouvez pas vous supprimer vous-même!', $this->getUser()->getUsername()));
+        } else {
+            $em->remove($user);
+            $em->flush();
+            $this->addFlash('success', 'Utilisateur supprimé avec succès !');
+        }
         return $this->redirectToRoute('app_users');
     }
 }
