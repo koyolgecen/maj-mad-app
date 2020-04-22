@@ -3,17 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Fournisseur;
-use App\Entity\User;
 use App\Form\FournisseurType;
-use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class FournisseurController extends AbstractController
 {
@@ -49,7 +45,7 @@ class FournisseurController extends AbstractController
      * @Route("/fournisseur-add", name="app_fournisseur_add")
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
@@ -113,8 +109,7 @@ class FournisseurController extends AbstractController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-
-    public function  delete(Request $request, $id){
+    public function delete(Request $request, $id){
 
         $fournisseurs = $this->getDoctrine()->getRepository( Fournisseur::class)->find($id);
 
