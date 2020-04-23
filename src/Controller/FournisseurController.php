@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FournisseurController extends AbstractController
 {
     /**
-     * @Route("/fournisseurs", name="app_fournisseurs")
+     * @Route("/fournisseurs", name="fournisseurs")
      */
     public function fournisseurs()
     {
@@ -33,7 +33,7 @@ class FournisseurController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/fournisseur-add", name="app_fournisseur_add")
+     * @Route("/fournisseur-add", name="fournisseur_add")
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
@@ -49,7 +49,7 @@ class FournisseurController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Nouveau fournisseur ajouté!');
-            return $this->redirectToRoute('app_fournisseurs');
+            return $this->redirectToRoute('fournisseurs');
         }
 
         return $this->render('fournisseur/add.html.twig', [
@@ -64,7 +64,7 @@ class FournisseurController extends AbstractController
      *
      * @return RedirectResponse|Response
      *
-     * @Route("/fournisseur/edit/{id}", name="app_fournisseur_edit")
+     * @Route("/fournisseur/edit/{id}", name="fournisseur_edit")
      */
     public function edit(Fournisseur $fournisseur, Request $request, EntityManagerInterface $em)
     {
@@ -77,7 +77,7 @@ class FournisseurController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Fournisseur "%s" modifié avec succès !', $fournisseur->getNom()));
-            return $this->redirectToRoute('app_fournisseur_edit', [
+            return $this->redirectToRoute('fournisseur_edit', [
                 'id' => $fournisseur->getId()
             ]);
         }
@@ -89,20 +89,19 @@ class FournisseurController extends AbstractController
     }
 
     /**
-     * @param $id
-     * @param Request $request
+     * @param Fournisseur $fournisseur
+     * @param EntityManagerInterface $em
      *
-     * @Route("/fournisseur/delete/{id}", methods={"DELETE"})
+     * @return RedirectResponse
+     *
+     * @Route("/fournisseur/delete/{id}", name="fournisseur_delete")
      */
-    public function delete(Request $request, $id){
-
-        $fournisseurs = $this->getDoctrine()->getRepository( Fournisseur::class)->find($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($fournisseurs);
+    public function delete(Fournisseur $fournisseur, EntityManagerInterface $em)
+    {
+        $em->remove($fournisseur);
         $em->flush();
 
-        $response = new Response();
-        $response->send();
+        $this->addFlash('success', 'Fournisseur supprimé avec succès !');
+        return $this->redirectToRoute('fournisseurs');
     }
 }

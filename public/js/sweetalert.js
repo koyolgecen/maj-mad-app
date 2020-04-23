@@ -1,8 +1,8 @@
 $('.confirm').click(function (e) {
     e.preventDefault();
     Swal.fire({
-        title: 'Cette opération est inversible !',
-        text: "Etes vous sûr de supprimer " + $(this).data('to-delete') + " ?",
+        title: "Etes vous sûr de supprimer " + $(this).data('to-delete') + " ?",
+        text: 'Cette opération est inversible !',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#28a745',
