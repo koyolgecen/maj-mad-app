@@ -20,7 +20,8 @@ class ComposantType extends AbstractType
             ->add('quantite')
             ->add('prix')
             ->add('famille', EntityType::class, [
-                'class' => FamilleComposant::class
+                'class' => FamilleComposant::class,
+                'placeholder' => 'Choisir'
             ])
             ->add('marge', EntityType::class, [
                 'class' => Marge::class,

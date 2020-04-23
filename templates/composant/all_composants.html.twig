@@ -1,0 +1,58 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% block title %}Composants{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ composants | length }}</span>
+        Composants
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('composant_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter nouveau composant
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nature</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Famille</th>
+                <th>Marge</th>
+                <th>Fournisseurs</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for composant in composants %}
+                <tr>
+                    <td>{{ composant.nature }}</td>
+                    <td>{{ composant.quantite }}</td>
+                    <td>{{ composant.prix }}&nbsp;€</td>
+                    <td>{{ composant.famille }}</td>
+                    <td title="Marge commerciale : {{ composant.marge.margeCommerciale }}&nbsp;Marge entreprise :  {{ composant.marge.margeEntreprise }}">
+                        {{ composant.marge }}
+                    </td>
+                    <td>{% for fournisseur in composant.fournisseurs %}{{ fournisseur.nom }}<br>{% endfor %}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ composant.nature }}"
+                           href="#">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-toggle="tooltip" title="Supprimer {{ composant.nature }}"
+                           href="#">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

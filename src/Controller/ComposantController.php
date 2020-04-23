@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Composant;
 use App\Form\ComposantType;
 use App\Form\FournisseurType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ComposantController extends AbstractController
 {
+    /**
+     * @Route("/composants", name="composants")
+     */
+    public function composants()
+    {
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        /** @var Composant[] $composants */
+        $composants = $this->getDoctrine()->getRepository(Composant::class)->findAll();
+
+        return $this->render('composant/all_composants.html.twig', [
+            'composants' => $composants
+        ]);
+    }
+
     /**
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -34,7 +49,7 @@ class ComposantController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Nouveau composant ajouté!');
-            //return $this->redirectToRoute('composants');
+            return $this->redirectToRoute('composants');
         }
 
         return $this->render('composant/add.html.twig', [
