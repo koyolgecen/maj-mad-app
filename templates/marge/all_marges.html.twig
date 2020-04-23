@@ -34,7 +34,8 @@
                                href="{{ path('app_marge_edit', { 'id': marge.id }) }}">
                                 <i class="fas fa-edit fa-sm"></i>
                             </a>
-                            <a class="btn btn-danger btn-sm ml-1 withConfirmation"
+                            <a class="btn btn-danger btn-sm ml-1 confirm"
+                               data-to-delete="{{ marge.nom }}"
                                data-toggle="tooltip" title="Supprimer {{ marge.nom }}"
                                href="{{ path('marge_delete', {'id': marge.id })}}">
                                 <i class="fas fa-trash fa-sm"></i>
