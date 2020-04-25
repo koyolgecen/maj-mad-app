@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un module{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <div class="row text-center">
+        <div class="col-md-12 mt-3 mb-3">
+            <button type="submit" class="btn btn-success">Modifier</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
