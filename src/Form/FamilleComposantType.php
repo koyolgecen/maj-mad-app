@@ -14,7 +14,7 @@ class FamilleComposantType extends AbstractType
     {
         $builder
             ->add('nomComposant', TextType::class, [
-                'label' => 'Nom composant'
+                'label' => 'Nom de la famille composant'
             ])
         ;
     }

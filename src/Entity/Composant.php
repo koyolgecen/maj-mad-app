@@ -41,6 +41,7 @@ class Composant
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Marge", inversedBy="composants")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $marge;
 
@@ -48,6 +49,11 @@ class Composant
      * @ORM\ManyToMany(targetEntity="App\Entity\Fournisseur", inversedBy="composants")
      */
     private $fournisseurs;
+
+    public function __toString()
+    {
+        return (string) $this->getNature();
+    }
 
     public function __construct()
     {

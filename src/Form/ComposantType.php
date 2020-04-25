@@ -25,7 +25,8 @@ class ComposantType extends AbstractType
             ])
             ->add('marge', EntityType::class, [
                 'class' => Marge::class,
-                'placeholder' => 'Choisir'
+                'placeholder' => 'Choisir',
+                'required' => false
             ])
             ->add('fournisseurs', EntityType::class, [
                 'class' => Fournisseur::class,

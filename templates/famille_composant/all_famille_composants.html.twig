@@ -1,0 +1,49 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% block title %}Famille composants{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ familleComposants | length }}</span>
+        Famille composants
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('famille_composant_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter nouvelle famille composant
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom de la famille</th>
+                <th>Composants rattachés à cette famille</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for familleComposant in familleComposants %}
+                <tr>
+                    <td>{{ familleComposant.nomComposant }}</td>
+                    <td>{% for composant in familleComposant.composants %}{{ composant.nature }}<br>{% endfor %}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ familleComposant.nomComposant }}"
+                           href="{{ path('famille_composant_edit', { 'id': familleComposant.id }) }}">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ familleComposant.nomComposant }}"
+                           data-toggle="tooltip" title="Supprimer {{ familleComposant.nomComposant }}"
+                           href="{{ path('famille_composant_delete', { 'id': familleComposant.id }) }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

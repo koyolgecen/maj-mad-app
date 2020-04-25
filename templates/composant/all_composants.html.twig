@@ -33,19 +33,20 @@
                     <td>{{ composant.quantite }}</td>
                     <td>{{ composant.prix }}&nbsp;€</td>
                     <td>{{ composant.famille }}</td>
-                    <td title="Marge commerciale : {{ composant.marge.margeCommerciale }}&nbsp;Marge entreprise :  {{ composant.marge.margeEntreprise }}">
+                    <td {% if composant.marge %}title="Marge commerciale : {{ composant.marge.margeCommerciale }}&nbsp;Marge entreprise :  {{ composant.marge.margeEntreprise }}"{% endif %}>
                         {{ composant.marge }}
                     </td>
                     <td>{% for fournisseur in composant.fournisseurs %}{{ fournisseur.nom }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ composant.nature }}"
-                           href="#">
+                           href="{{ path('composant_edit', { 'id': composant.id }) }}">
                             <i class="fas fa-edit fa-sm"></i>
                         </a>
                         <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ composant.nature }}"
                            data-toggle="tooltip" title="Supprimer {{ composant.nature }}"
-                           href="#">
+                           href="{{ path('composant_delete', { 'id': composant.id }) }}">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
                     </td>
