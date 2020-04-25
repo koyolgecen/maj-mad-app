@@ -49,6 +49,11 @@ class Composant
      */
     private $fournisseurs;
 
+    public function __toString()
+    {
+        return (string) $this->getNature();
+    }
+
     public function __construct()
     {
         $this->fournisseurs = new ArrayCollection();
