@@ -30,15 +30,15 @@ class Module
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\CoupeDePrincipe", inversedBy="modules")
-     * @ORM\Column(name="coupeDePrincipe_id")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $coupeDePrincipe_id;
+    private $coupeDePrincipe;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CCTP")
-     * @ORM\Column(name="cctp_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CCTP", inversedBy="modules")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $cctp_id;
+    private $cctp;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Composant")
@@ -79,28 +79,36 @@ class Module
         return $this;
     }
 
-    public function getCoupeDePrincipeId(): string
+    /**
+     * @return string
+     */
+    public function getCoupeDePrincipe()
     {
-        return $this->coupeDePrincipe_id;
+        return $this->coupeDePrincipe;
     }
 
-    public function setCoupeDePrincipeId(?CoupeDePrincipe $coupeDePrincipe_id): self
+    /**
+     * @param $coupeDePrincipe
+     */
+    public function setCoupeDePrincipe($coupeDePrincipe): void
     {
-        $this->coupeDePrincipe_id = $coupeDePrincipe_id;
-
-        return $this;
+        $this->coupeDePrincipe = $coupeDePrincipe;
     }
 
-    public function getCctpId(): string
+    /**
+     * @return string
+     */
+    public function getCctp()
     {
-        return $this->cctp_id;
+        return $this->cctp;
     }
 
-    public function setCctpId(?CCTP $cctp_id): self
+    /**
+     * @param $cctp
+     */
+    public function setCctp($cctp): void
     {
-        $this->cctp_id = $cctp_id;
-
-        return $this;
+        $this->cctp = $cctp;
     }
 
     /**

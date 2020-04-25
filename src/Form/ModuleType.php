@@ -18,11 +18,11 @@ class ModuleType extends AbstractType
         $builder
             ->add('nom')
             ->add('quantite')
-            ->add('coupeDePrincipe_id',EntityType::class, [
+            ->add('coupeDePrincipe',EntityType::class, [
                 'class' => CoupeDePrincipe::class,
                 'placeholder' => 'Choisir'
             ])
-            ->add('cctp_id',EntityType::class, [
+            ->add('cctp',EntityType::class, [
                 'class' => CCTP::class,
                 'placeholder' => 'Choisir'
             ])

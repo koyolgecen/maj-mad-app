@@ -24,7 +24,7 @@ class CoupeDePrincipe
     private $typeCoupePrincipe;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Module", mappedBy="coupeDePrincipe_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Module", mappedBy="coupeDePrincipe")
      */
     private $modules;
 
@@ -72,7 +72,7 @@ class CoupeDePrincipe
     {
         if (!$this->modules->contains($module)) {
             $this->modules[] = $module;
-            $module->setCoupeDePrincipeId($this);
+            $module->setCoupeDePrincipe($this);
         }
 
         return $this;
@@ -83,8 +83,8 @@ class CoupeDePrincipe
         if ($this->modules->contains($module)) {
             $this->modules->removeElement($module);
             // set the owning side to null (unless already changed)
-            if ($module->getCoupeDePrincipeId() === $this) {
-                $module->setCoupeDePrincipeId(null);
+            if ($module->getCoupeDePrincipe() === $this) {
+                $module->setCoupeDePrincipe(null);
             }
         }
 
