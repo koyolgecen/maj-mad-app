@@ -28,11 +28,15 @@ class AccountController extends AbstractController
     public function users()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
         /** @var User[] $users */
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $users = $userRepository->findAll();
 
         return $this->render('account/all_users.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'admins' => count($userRepository->findByRole(User::ROLE_ADMIN)),
+            'commercials' => count($userRepository->findByRole(User::ROLE_COMMERCIAL)),
+            'bureaudetudes' => count($userRepository->findByRole(User::ROLE_BUREAU_DETUDE))
         ]);
     }
 
