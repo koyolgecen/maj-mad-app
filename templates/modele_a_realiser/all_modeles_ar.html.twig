@@ -18,10 +18,7 @@
             <thead>
             <tr>
                 <th>Nom modèle</th>
-                <th>Mode de conception</th>
-                <th>Longueur</th>
-                <th>Largeur</th>
-                <th>Modèles</th>
+                <th>Modules</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -29,9 +26,6 @@
             {% for modele in modeles %}
                 <tr>
                     <td>{{ modele.nom }}</td>
-                    <td>{{ modele.modeConception }}</td>
-                    <td>{{ modele.longueur }}&nbsp;</td>
-                    <td>{{ modele.largeur }}</td>
                     <td>{% for module in modele.modules %}{{ module.nom }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"

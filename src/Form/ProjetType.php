@@ -32,10 +32,15 @@ class ProjetType extends AbstractType
                 'placeholder' => 'Choisir',
                 'required' => false
             ])
-            ->add('modele', EntityType::class, [
+            ->add('modeles', EntityType::class, [
                 'class' => ModeleARealiser::class,
+                'multiple' => true,
+                'expanded' => true,
                 'placeholder' => 'Choisir',
-                'required' => false
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-custom'
+                ]
             ])
 
         ;

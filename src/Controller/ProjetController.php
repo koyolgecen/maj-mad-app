@@ -77,7 +77,7 @@ class ProjetController extends AbstractController
             $em->persist($projet);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Projet "%s" modifié avec succès !', $projet->getNom()));
+            $this->addFlash('success', sprintf('Projet "%s" modifié avec succès !', $projet->getType()));
             return $this->redirectToRoute('projet_edit', [
                 'id' => $projet->getId()
             ]);

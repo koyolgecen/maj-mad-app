@@ -51,7 +51,7 @@ class Projet
 
     public function __toString()
     {
-        return $this->nom;
+        return $this->type;
     }
 
     public function __construct()

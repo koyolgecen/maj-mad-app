@@ -17,7 +17,6 @@
         <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
             <thead>
             <tr>
-                <th>Nom projet</th>
                 <th>Type</th>
                 <th>Date de création</th>
                 <th>Référence</th>
@@ -30,22 +29,21 @@
             <tbody>
             {% for projet in projets %}
                 <tr>
-                    <td>{{ projet.nom }}</td>
                     <td>{{ projet.type }}</td>
-                    <td>{{ projet.dateCreation }}</td>
+                    <td>{{ projet.dateCreation|date('d/m/y') }}</td>
                     <td>{{ projet.reference }}</td>
-                    <td>{% for client in projet.clients %}{{ client.nom }}<br>{% endfor %}</td>
+                    <td>{{ projet.client }}</td>
                     <td>{% for produit in projet.produits %}{{ produit.nom }}<br>{% endfor %}</td>
                     <td>{% for modele in projet.modeles %}{{ modele.nom }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
-                           data-toggle="tooltip" title="Modifier {{ projet.nom }}"
+                           data-toggle="tooltip" title="Modifier {{ projet.type }}"
                            href="{{ path('projet_edit', { 'id': projet.id }) }}">
                             <i class="fas fa-edit fa-sm"></i>
                         </a>
                         <a class="btn btn-danger btn-sm ml-1 confirm"
-                           data-to-delete="{{ projet.nom }}"
-                           data-toggle="tooltip" title="Supprimer {{ projet.nom }}"
+                           data-to-delete="{{ projet.type }}"
+                           data-toggle="tooltip" title="Supprimer {{ projet.type }}"
                            href="{{ path('projet_delete', { 'id': projet.id }) }}">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
