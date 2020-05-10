@@ -53,11 +53,7 @@ class UserType extends AbstractType
         // on peut manipuler les rôles uniquement si on est admin
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             $builder->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Commercial' => 'ROLE_COMMERCIAL',
-                    'Bureau d\'étude' => 'ROLE_BUREAU_DETUDE',
-                    'Admin' => 'ROLE_ADMIN'
-                ],
+                'choices' => User::ROLES_WITH_LABEL_FR,
                 'label' => 'Rôles',
                 'multiple' => true,
                 'expanded' => true,

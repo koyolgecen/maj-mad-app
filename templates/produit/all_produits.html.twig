@@ -19,6 +19,7 @@
             <tr>
                 <th>Nom</th>
                 <th>Gamme</th>
+                <th>Projets</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -27,6 +28,7 @@
                 <tr>
                     <td>{{produit.nom}}</td>
                     <td>{{produit.gamme}}</td>
+                    <td>{% for projet in produit.projets %}{{ projet.type }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ produit.nom }}"

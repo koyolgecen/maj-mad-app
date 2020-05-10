@@ -2,23 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Produit;
+use App\Entity\ModeleARealiser;
+use App\Entity\ModuleARealiser;
 use App\Entity\Projet;
-use App\Entity\Gamme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProduitType extends AbstractType
+class ModeleARealiserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('gamme', EntityType::class, [
-                'class' => Gamme::class,
-                'placeholder' => 'Choisir'
+            ->add('modules', EntityType::class, [
+                'class' => ModuleARealiser::class,
+                'multiple' => true,
+                'expanded' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-custom'
+                ]
             ])
         ;
     }
@@ -26,7 +30,7 @@ class ProduitType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => ModeleARealiser::class,
         ]);
     }
 }

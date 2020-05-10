@@ -25,35 +25,36 @@ class UserFixture extends BaseFixture
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(10, 'main_users', function() {
+        $this->createMany(10, 'commercial_users', function() {
             $user = new User();
             $user->setEmail($this->faker->email);
             $user->setPrenom($this->faker->firstName);
             $user->setNom($this->faker->lastName);
             $user->setLogin($this->faker->userName);
-            $user->setPassword($this->passwordEncoder->encodePassword($user, "test"));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, "commercial"));
+            $user->setRoles([User::ROLE_COMMERCIAL]);
             return $user;
         });
 
-        $this->createMany(3, 'admin_users', function($i) {
+        $this->createMany(5, 'admin_users', function($i) {
             $user = new User();
             $user->setEmail(sprintf("admin%d@madera.fr", $i));
             $user->setPrenom($this->faker->firstName);
             $user->setNom($this->faker->lastName);
             $user->setLogin($this->faker->userName);
             $user->setPassword($this->passwordEncoder->encodePassword($user, "admin"));
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles([User::ROLE_ADMIN]);
             return $user;
         });
 
-        $this->createMany(3, 'bureau_detudes_users', function($i) {
+        $this->createMany(5, 'bureau_detudes_users', function($i) {
             $user = new User();
             $user->setEmail(sprintf("bureauetude%d@madera.fr", $i));
             $user->setPrenom($this->faker->firstName);
             $user->setNom($this->faker->lastName);
             $user->setLogin($this->faker->userName);
             $user->setPassword($this->passwordEncoder->encodePassword($user, "etude"));
-            $user->setRoles(['ROLE_BUREAU_DETUDE']);
+            $user->setRoles([User::ROLE_BUREAU_DETUDE]);
             return $user;
         });
         $manager->flush();

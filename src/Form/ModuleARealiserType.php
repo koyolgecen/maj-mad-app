@@ -2,31 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Produit;
-use App\Entity\Projet;
-use App\Entity\Gamme;
+use App\Entity\ModeleARealiser;
+use App\Entity\ModuleARealiser;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProduitType extends AbstractType
+class ModuleARealiserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('gamme', EntityType::class, [
-                'class' => Gamme::class,
-                'placeholder' => 'Choisir'
-            ])
+            ->add('modeConception')
+            ->add('longueur')
+            ->add('largeur')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => ModuleARealiser::class,
         ]);
     }
 }

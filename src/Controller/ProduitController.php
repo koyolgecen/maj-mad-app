@@ -18,7 +18,7 @@ class ProduitController extends AbstractController
      */
     public function produits()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var Produit[] $produits */
         $produits = $this->getDoctrine()->getRepository( Produit::class)->findAll();
 
@@ -26,7 +26,6 @@ class ProduitController extends AbstractController
             'produits' => $produits
         ]);
     }
-
 
     /**
      * @param Request $request
@@ -66,6 +65,7 @@ class ProduitController extends AbstractController
      * @return RedirectResponse|Response
      *
      * @Route("/produit/edit/{id}", name="produit_edit")
+     *
      */
     public function edit(Produit $produit, Request $request, EntityManagerInterface $em)
     {
@@ -105,4 +105,5 @@ class ProduitController extends AbstractController
         $this->addFlash('success', 'Produit supprimé avec succès !');
         return $this->redirectToRoute('produits');
     }
+
 }

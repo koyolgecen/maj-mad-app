@@ -2,31 +2,32 @@
 
 namespace App\Form;
 
-use App\Entity\Produit;
+use App\Entity\Client;
 use App\Entity\Projet;
-use App\Entity\Gamme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProduitType extends AbstractType
+class ClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('gamme', EntityType::class, [
-                'class' => Gamme::class,
-                'placeholder' => 'Choisir'
-            ])
+            ->add('prenom')
+            ->add('adresse')
+            ->add('ville')
+            ->add('codePostale')
+            ->add('telephone')
+            ->add('mail')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => Client::class,
         ]);
     }
 }

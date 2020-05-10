@@ -17,6 +17,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_BUREAU_DETUDE = 'ROLE_BUREAU_DETUDE';
+    public const ROLE_COMMERCIAL = 'ROLE_COMMERCIAL';
+
+    public const ROLES_WITH_LABEL_FR = [
+      'Commercial' => self::ROLE_COMMERCIAL,
+      'Bureau d\'étude' => self::ROLE_BUREAU_DETUDE,
+      'Admin' => self::ROLE_ADMIN
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
