@@ -1,0 +1,47 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% block title %}Couvertures{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ couvertures | length }}</span>
+        Couvertures
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('couverture_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter nouvelle couverture
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for couverture in couvertures %}
+                <tr>
+                    <td>{{couverture.nom}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ couverture.nom }}"
+                           href="{{ path('couverture_edit', { 'id': couverture.id }) }}">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ couverture.nom }}"
+                           data-toggle="tooltip" title="Supprimer {{ couverture.nom }}"
+                           href="{{ path('couverture_delete', { 'id': couverture.id }) }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

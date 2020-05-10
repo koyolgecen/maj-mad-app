@@ -1,0 +1,49 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% block title %}Règles de calcul{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ reglesCalcul | length }}</span>
+        Règles de calcul
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('regle_calcul_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter une régle de calcul
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Calcul</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for regleCalcul in reglesCalcul %}
+                <tr>
+                    <td>{{regleCalcul.nom}}</td>
+                    <td>{{regleCalcul.calcul}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ regleCalcul.nom }}"
+                           href="{{ path('regle_calcul_edit', { 'id': regleCalcul.id }) }}">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ regleCalcul.nom }}"
+                           data-toggle="tooltip" title="Supprimer {{ regleCalcul.nom }}"
+                           href="{{ path('regle_calcul_delete', { 'id': regleCalcul.id }) }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
