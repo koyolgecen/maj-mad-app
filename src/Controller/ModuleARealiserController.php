@@ -22,7 +22,7 @@ class ModuleARealiserController extends AbstractController
         /** @var ModuleARealiser[] $modules */
         $modules = $this->getDoctrine()->getRepository( ModuleARealiser::class)->findAll();
 
-        return $this->render('modules-ar/all_modules_ar.html.twig', [
+        return $this->render('module_a_realiser/all_modules_ar.html.twig', [
             'modules' => $modules
         ]);
     }
@@ -52,7 +52,7 @@ class ModuleARealiserController extends AbstractController
             return $this->redirectToRoute('modules_ar');
         }
 
-        return $this->render('module-ar/add.html.twig', [
+        return $this->render('module_a_realiser/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -83,7 +83,7 @@ class ModuleARealiserController extends AbstractController
             ]);
         }
 
-        return $this->render('module-ar/edit.html.twig', [
+        return $this->render('module_a_realiser/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $module
         ]);

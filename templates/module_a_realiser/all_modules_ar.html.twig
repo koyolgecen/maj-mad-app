@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1 class="text-dark text-center mb-3">
-        <span class="badge badge-pill badge-dark">{{ modules_ar | length }}</span>
+        <span class="badge badge-pill badge-dark">{{ modules | length }}</span>
         Modules
     </h1>
     <div class="text-center mb-3">
@@ -32,7 +32,7 @@
                     <td>{{ module.modeConception }}</td>
                     <td>{{ module.longueur }}&nbsp;</td>
                     <td>{{ module.largeur }}</td>
-                    <td>{% for modele in module.modeles %}{{ modele.nom }}<br>{% endfor %}</td>
+                    <td>{% for modele in module.modele %}{{ modele.nom }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ module.nom }}"

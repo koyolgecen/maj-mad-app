@@ -22,7 +22,7 @@ class ModeleARealiserController extends AbstractController
         /** @var ModeleARealiser[] $modeles */
         $modeles = $this->getDoctrine()->getRepository( ModeleARealiser::class)->findAll();
 
-        return $this->render('modele-ar/all_modeles_ar.html.twig', [
+        return $this->render('modele_a_realiser/all_modeles_ar.html.twig', [
             'modeles' => $modeles
         ]);
     }
@@ -52,7 +52,7 @@ class ModeleARealiserController extends AbstractController
             return $this->redirectToRoute('modeles_ar');
         }
 
-        return $this->render('modele-ar/add.html.twig', [
+        return $this->render('modele_a_realiser/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -83,7 +83,7 @@ class ModeleARealiserController extends AbstractController
             ]);
         }
 
-        return $this->render('modele-ar/edit.html.twig', [
+        return $this->render('modele_a_realiser/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $modele
         ]);
