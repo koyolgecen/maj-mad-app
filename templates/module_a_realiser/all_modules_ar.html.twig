@@ -1,0 +1,55 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% block title %}Modules à réaliser{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ modules_ar | length }}</span>
+        Modules
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('module_ar_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter un nouveau module
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom module</th>
+                <th>Mode de conception</th>
+                <th>Longueur</th>
+                <th>Largeur</th>
+                <th>Modèles</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.nom }}</td>
+                    <td>{{ module.modeConception }}</td>
+                    <td>{{ module.longueur }}&nbsp;</td>
+                    <td>{{ module.largeur }}</td>
+                    <td>{% for modele in module.modeles %}{{ modele.nom }}<br>{% endfor %}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ module.nom }}"
+                           href="{{ path('module_ar_edit', { 'id': module.id }) }}">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ module.nom }}"
+                           data-toggle="tooltip" title="Supprimer {{ module.nom }}"
+                           href="{{ path('module_ar_delete', { 'id': module.id }) }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
