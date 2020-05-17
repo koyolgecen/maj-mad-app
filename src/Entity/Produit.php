@@ -28,6 +28,12 @@ class Produit
      */
     private $projets;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gamme", inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $gamme;
+
     public function __toString()
     {
         return $this->nom;
@@ -37,12 +43,6 @@ class Produit
     {
         $this->projets = new ArrayCollection();
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gamme", inversedBy="produits")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $gamme;
 
     public function getId(): ?int
     {
