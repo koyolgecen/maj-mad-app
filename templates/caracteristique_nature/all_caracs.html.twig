@@ -1,14 +1,14 @@
 {% extends 'base_datatable.html.twig' %}
 
-{% block title %}Caracteristiques{% endblock %}
+{% block title %}Caracteristiques de nature{% endblock %}
 
 {% block body %}
     <h1 class="text-dark text-center mb-3">
         <span class="badge badge-pill badge-dark">{{ caracs | length }}</span>
-        Caracteristiques
+        Caracteristiques de nature
     </h1>
     <div class="text-center mb-3">
-        <a class="btn btn-success" href="{{ path('carac_add') }}">
+        <a class="btn btn-success" href="{{ path('caracteristiques_nature_add') }}">
             <i class="fas fa-plus mr-2"></i>Ajouter nouvelle caractéristique de nature
         </a>
     </div>
@@ -30,13 +30,13 @@
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ carac.nomCaracNature }}"
-                           href="{{ path('carac_edit', { 'id': carac.id }) }}">
+                           href="{{ path('caracteristiques_nature_edit', { 'id': carac.id }) }}">
                             <i class="fas fa-edit fa-sm"></i>
                         </a>
                         <a class="btn btn-danger btn-sm ml-1 confirm"
                            data-to-delete="{{ carac.nomCaracNature }}"
                            data-toggle="tooltip" title="Supprimer {{ carac.nomCaracNature }}"
-                           href="{{ path('carac_delete', {'id': carac.id })}}">
+                           href="{{ path('caracteristiques_nature_delete', {'id': carac.id })}}">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
                     </td>

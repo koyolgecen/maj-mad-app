@@ -79,9 +79,7 @@ class NatureController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Nature "%s" modifiée avec succès !', $nature->getNomNature()));
-            return $this->redirectToRoute('nature_edit', [
-                'id' => $nature->getId()
-            ]);
+            return $this->redirectToRoute('natures');
         }
 
         return $this->render('nature/edit.html.twig', [

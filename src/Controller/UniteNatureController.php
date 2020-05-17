@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\UniteNature;
 use App\Form\UniteNatureType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UniteNatureController extends AbstractController
 {
-
     /**
      * @Route("/unites-nature", name="unites")
      */
@@ -80,9 +80,7 @@ class UniteNatureController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Unité "%s" modifié avec succès !', $unite->getDescUniteNature()));
-            return $this->redirectToRoute('unite_edit', [
-                'id' => $unite->getId()
-            ]);
+            return $this->redirectToRoute('unites');
         }
 
         return $this->render('unite_nature/edit.html.twig', [
@@ -101,10 +99,13 @@ class UniteNatureController extends AbstractController
      */
     public function delete(UniteNature $unite, EntityManagerInterface $em)
     {
-        $em->remove($unite);
-        $em->flush();
-
-        $this->addFlash('success', 'Unité supprimée avec succès !');
+        try {
+            $em->remove($unite);
+            $em->flush();
+            $this->addFlash('success', 'Unité supprimée avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! L\'unité est liée aux natures "%s" !', implode(',', $unite->getNatures()->toArray())));
+        }
         return $this->redirectToRoute('unites');
     }
 }

@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProduitRepository")
+ *
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
  */
 class Produit
 {

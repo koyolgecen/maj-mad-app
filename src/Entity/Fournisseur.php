@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FournisseurRepository")
+ *
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class Fournisseur
 {

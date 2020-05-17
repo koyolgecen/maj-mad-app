@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ModuleRepository")
+ *
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class Module
 {

@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CouvertureGammeRepository")
+ *
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
  */
 class CouvertureGamme
 {

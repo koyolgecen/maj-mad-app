@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NatureRepository")
+ *
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class Nature
 {
@@ -24,14 +25,14 @@ class Nature
     private $nomNature;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CaracteristiqueNature", mappedBy="natures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CaracteristiqueNature", inversedBy="natures")
      */
-    private $caracteristiquesNature;
+    private $caracteristiqueNature;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UniteNature", mappedBy="natures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UniteNature", inversedBy="natures")
      */
-    private $unitesNature;
+    private $uniteNature;
 
     /**
      * @return string
@@ -39,12 +40,6 @@ class Nature
     public function __toString()
     {
         return (string) $this->nomNature;
-    }
-
-    public function __construct()
-    {
-        $this->caracteristiquesNature = new ArrayCollection();
-        $this->unitesNature = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,64 +60,34 @@ class Nature
     }
 
     /**
-     * @return Collection|CaracteristiqueNature[]
+     * @return CaracteristiqueNature
      */
-    public function getCaracteristiquesNature(): Collection
+    public function getCaracteristiqueNature(): ?CaracteristiqueNature
     {
-        return $this->caracteristiquesNature;
-    }
-
-    public function addCaracteristiquesNature(CaracteristiqueNature $caracteristiquesNature): self
-    {
-        if (!$this->caracteristiquesNature->contains($caracteristiquesNature)) {
-            $this->caracteristiquesNature[] = $caracteristiquesNature;
-            $caracteristiquesNature->setNatures($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCaracteristiquesNature(CaracteristiqueNature $caracteristiquesNature): self
-    {
-        if ($this->caracteristiquesNature->contains($caracteristiquesNature)) {
-            $this->caracteristiquesNature->removeElement($caracteristiquesNature);
-            // set the owning side to null (unless already changed)
-            if ($caracteristiquesNature->getNatures() === $this) {
-                $caracteristiquesNature->setNatures(null);
-            }
-        }
-
-        return $this;
+        return $this->caracteristiqueNature;
     }
 
     /**
-     * @return Collection|UniteNature[]
+     * @param CaracteristiqueNature|null $caracteristiqueNature
      */
-    public function getUnitesNature(): Collection
+    public function setCaracteristiqueNature(?CaracteristiqueNature $caracteristiqueNature): void
     {
-        return $this->unitesNature;
+        $this->caracteristiqueNature = $caracteristiqueNature;
     }
 
-    public function addUnitesNature(UniteNature $unitesNature): self
+    /**
+     * @return UniteNature
+     */
+    public function getUniteNature(): ?UniteNature
     {
-        if (!$this->unitesNature->contains($unitesNature)) {
-            $this->unitesNature[] = $unitesNature;
-            $unitesNature->setNatures($this);
-        }
-
-        return $this;
+        return $this->uniteNature;
     }
 
-    public function removeUnitesNature(UniteNature $unitesNature): self
+    /**
+     * @param UniteNature|null $uniteNature
+     */
+    public function setUniteNature(?UniteNature $uniteNature): void
     {
-        if ($this->unitesNature->contains($unitesNature)) {
-            $this->unitesNature->removeElement($unitesNature);
-            // set the owning side to null (unless already changed)
-            if ($unitesNature->getNatures() === $this) {
-                $unitesNature->setNatures(null);
-            }
-        }
-
-        return $this;
+        $this->uniteNature = $uniteNature;
     }
 }

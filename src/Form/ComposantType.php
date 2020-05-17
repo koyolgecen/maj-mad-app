@@ -8,6 +8,8 @@ use App\Entity\Fournisseur;
 use App\Entity\Marge;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,8 +25,15 @@ class ComposantType extends AbstractType
     {
         $builder
             ->add('nature')
-            ->add('quantite')
-            ->add('prix')
+            ->add('quantite', NumberType::class, [
+                'html5' => true,
+                'attr' => [
+                    'min' => 1
+                ]
+            ])
+            ->add('prix', MoneyType::class, [
+                'scale' => 2
+            ])
             ->add('famille', EntityType::class, [
                 'class' => FamilleComposant::class,
                 'placeholder' => 'Choisir',

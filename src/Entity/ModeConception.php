@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ModeConceptionRepository")
+ *
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
  */
 class ModeConception
 {

@@ -30,8 +30,8 @@
             {% for composant in composants %}
                 <tr>
                     <td>{{ composant.nature }}</td>
-                    <td>{{ composant.quantite }}</td>
-                    <td>{{ composant.prix }}&nbsp;€</td>
+                    <td>{{ composant.quantite | number_format(0, ' ', ' ') }}</td>
+                    <td>{{ composant.prix | number_format(2, ',', ' ') }}&nbsp;€</td>
                     <td>{{ composant.famille }}</td>
                     <td {% if composant.marge %}title="Marge commerciale : {{ composant.marge.margeCommerciale }}&nbsp;Marge entreprise :  {{ composant.marge.margeEntreprise }}"{% endif %}>
                         {{ composant.marge }}

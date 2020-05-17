@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ *
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
  */
 class Client
 {

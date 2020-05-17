@@ -1,15 +1,15 @@
 {% extends 'base_datatable.html.twig' %}
 
-{% block title %}Unites{% endblock %}
+{% block title %}Unités de nature{% endblock %}
 
 {% block body %}
     <h1 class="text-dark text-center mb-3">
         <span class="badge badge-pill badge-dark">{{ unites | length }}</span>
-        Unites
+        Unités de nature
     </h1>
     <div class="text-center mb-3">
         <a class="btn btn-success" href="{{ path('unite_add') }}">
-            <i class="fas fa-plus mr-2"></i>Ajouter nouvelle unite de nature
+            <i class="fas fa-plus mr-2"></i>Ajouter nouvelle unité de nature
         </a>
     </div>
 
@@ -17,16 +17,16 @@
         <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
             <thead>
             <tr>
-                <th>Description</th>
                 <th>Usage</th>
+                <th>Description</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for unite in unites %}
                 <tr>
-                    <td>{{ unite.descUniteNature }}</td>
                     <td>{{ unite.uniteUsageNature }}</td>
+                    <td>{{ unite.descUniteNature }}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ unite.descUniteNature }}"

@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CaracteristiqueNatureRepository")
+ *
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class CaracteristiqueNature
 {
@@ -19,15 +24,15 @@ class CaracteristiqueNature
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private $descCaracNature;
-
-    /**
-     * @ORM\Column(type="string", length=45)
-     */
     private $nomCaracNature;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Nature", inversedBy="caracteristiquesNature")
+     * @ORM\Column(type="string", length=1000)
+     */
+    private $descCaracNature;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Nature", mappedBy="caracteristiqueNature")
      */
     private $natures;
 
@@ -39,21 +44,17 @@ class CaracteristiqueNature
         return (string) $this->nomCaracNature;
     }
 
+    /**
+     * CaracteristiqueNature constructor.
+     */
+    public function __construct()
+    {
+        $this->natures = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDescCaracNature(): ?string
-    {
-        return $this->descCaracNature;
-    }
-
-    public function setDescCaracNature(string $descCaracNature): self
-    {
-        $this->descCaracNature = $descCaracNature;
-
-        return $this;
     }
 
     public function getNomCaracNature(): ?string
@@ -68,14 +69,45 @@ class CaracteristiqueNature
         return $this;
     }
 
-    public function getNatures(): ?Nature
+    public function getDescCaracNature(): ?string
+    {
+        return $this->descCaracNature;
+    }
+
+    public function setDescCaracNature(string $descCaracNature): self
+    {
+        $this->descCaracNature = $descCaracNature;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Nature[]
+     */
+    public function getNatures(): ?Collection
     {
         return $this->natures;
     }
 
-    public function setNatures(?Nature $natures): self
+    public function addNature(Nature $nature): self
     {
-        $this->natures = $natures;
+        if (!$this->natures->contains($nature)) {
+            $this->natures[] = $nature;
+            $nature->setCaracteristiqueNature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNature(Nature $nature): self
+    {
+        if ($this->natures->contains($nature)) {
+            $this->natures->removeElement($nature);
+            // set the owning side to null (unless already changed)
+            if ($nature->getCaracteristiqueNature() === $this) {
+                $nature->setCaracteristiqueNature(null);
+            }
+        }
 
         return $this;
     }

@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MargeRepository")
+ *
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class Marge
 {

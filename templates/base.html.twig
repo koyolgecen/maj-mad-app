@@ -52,6 +52,15 @@
                                 </a>
                             {% endif %}
                         </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'famille_composant' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('famille_composants') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Familles composants</span>
+                                </a>
+                            {% endif %}
+                        </li>
                         <li class="nav-item" role="presentation">
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'composants' == app.request.get('_route')
@@ -63,11 +72,31 @@
                                 </a>
                             {% endif %}
                         </li>
+                        <div class="dropdown-divider"></div>
                         <li class="nav-item" role="presentation">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link {% if 'famille_composant' in app.request.get('_route') %}active{% endif %}"
-                                   href="{{ path('famille_composants') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Familles composants</span>
+                                <a class="nav-link {% if 'caracteristiques' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('caracteristiques_nature') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Caractéristiques nature</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'unite' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('unites') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Unités nature</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'natures' == app.request.get('_route')
+                                    or 'nature_add' == app.request.get('_route')
+                                    or 'nature_edit' == app.request.get('_route')
+                                %}active{% endif %}"
+                                   href="{{ path('natures') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Natures</span>
                                 </a>
                             {% endif %}
                         </li>
