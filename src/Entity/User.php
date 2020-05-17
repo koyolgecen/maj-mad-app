@@ -24,7 +24,7 @@ class User implements UserInterface
     public const ROLES_WITH_LABEL_FR = [
       'Commercial' => self::ROLE_COMMERCIAL,
       'Bureau d\'étude' => self::ROLE_BUREAU_DETUDE,
-      'Admin' => self::ROLE_ADMIN
+      'Administrateur' => self::ROLE_ADMIN
     ];
 
     /**

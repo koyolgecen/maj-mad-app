@@ -13,6 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComposantType extends AbstractType
 {
+    private const DATA_SIZE = 5;
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -21,24 +27,41 @@ class ComposantType extends AbstractType
             ->add('prix')
             ->add('famille', EntityType::class, [
                 'class' => FamilleComposant::class,
-                'placeholder' => 'Choisir'
+                'placeholder' => 'Choisir',
+                'attr' => [
+                    'class' => 'selectpicker show-tick',
+                    'data-live-search' => true,
+                    'data-size' => self::DATA_SIZE
+                ]
             ])
             ->add('marge', EntityType::class, [
                 'class' => Marge::class,
                 'placeholder' => 'Choisir',
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'selectpicker show-tick',
+                    'data-live-search' => true,
+                    'data-size' => self::DATA_SIZE
+                ]
             ])
             ->add('fournisseurs', EntityType::class, [
                 'class' => Fournisseur::class,
                 'multiple' => true,
-                'expanded' => true,
-                'label_attr' => [
-                    'class' => 'checkbox-custom'
-                ]
+                'attr' => [
+                    'class' => 'selectpicker show-tick',
+                    'multiple' => 'multiple',
+                    'data-live-search' => true,
+                    'data-size' => self::DATA_SIZE,
+                    'title' => 'Choisir'
+                ],
+                'help' => 'Vous pouvez choisir plusieurs parmis les fournisseurs.'
             ])
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

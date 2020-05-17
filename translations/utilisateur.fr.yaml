@@ -1,0 +1,15 @@
+prenom: Prénom
+motdepasse:
+  default: Mot de passe
+  new: Nouveau mot de passe
+  repeter: Répeter le mot de passe
+  identiques: Les deux mot de passe doivent être identiques!
+  minMessage: Allez, vous pouvez penser à un mot de passe plus long que ça!
+  maxMessage: Mot de passe est très long!
+roles: Rôles
+login:
+  help: Utilisé pour pouvoir connecter à l'application.
+ROLE_COMMERCIAL: Commercial
+ROLE_USER: Utilisateur
+ROLE_BUREAU_DETUDE: Bureau d'étude
+ROLE_ADMIN: Administrateur

@@ -23,28 +23,28 @@ class UserType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'prenom'
             ])
             ->add('login', TextType::class, [
-                'help' => 'Utilisé pour pouvoir connecter à l\'application.'
+                'help' => 'login.help'
             ])
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options'  => [
-                    'label' => $modif ? 'Nouveau mot de passe' : 'Mot de passe'
+                    'label' => $modif ? 'motdepasse.new' : 'motdepasse.default'
                 ],
                 'second_options' => [
-                    'label' => 'Répeter le mot de passe'
+                    'label' => 'motdepasse.repeter'
                 ],
-                'invalid_message' => 'Les deux mot de passe doivent être identiques!',
+                'invalid_message' => 'motdepasse.identiques',
                 'mapped' => false,
                 'constraints' => [
                     new Length([
                         'min' => 5,
                         'max' => 255,
-                        'minMessage' => 'Allez, vous pouvez penser à un mot de passe plus long que ça!',
-                        'maxMessage' => 'Mot de passe est très long!'
+                        'minMessage' => 'motdepasse.minMessage',
+                        'maxMessage' => 'motdepasse.maxMessage'
                     ])
                 ],
                 'required' => !$modif
@@ -54,7 +54,7 @@ class UserType extends AbstractType
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             $builder->add('roles', ChoiceType::class, [
                 'choices' => User::ROLES_WITH_LABEL_FR,
-                'label' => 'Rôles',
+                'label' => 'roles',
                 'multiple' => true,
                 'expanded' => true,
                 'label_attr' => [
@@ -69,7 +69,8 @@ class UserType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'user' => null,
-            'modification' => null
+            'modification' => null,
+            'translation_domain' => 'utilisateur'
         ]);
     }
 }
