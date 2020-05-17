@@ -83,8 +83,7 @@ class FournisseurController extends AbstractController
         }
 
         return $this->render('fournisseur/edit.html.twig', [
-            'form' => $form->createView(),
-            'user' => $fournisseur
+            'form' => $form->createView()
         ]);
     }
 

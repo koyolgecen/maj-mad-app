@@ -31,7 +31,8 @@ class ComposantType extends AbstractType
                 'attr' => [
                     'class' => 'selectpicker show-tick',
                     'data-live-search' => true,
-                    'data-size' => self::DATA_SIZE
+                    'data-size' => self::DATA_SIZE,
+                    'data-dropup-auto' => 'false'
                 ]
             ])
             ->add('marge', EntityType::class, [
@@ -41,7 +42,8 @@ class ComposantType extends AbstractType
                 'attr' => [
                     'class' => 'selectpicker show-tick',
                     'data-live-search' => true,
-                    'data-size' => self::DATA_SIZE
+                    'data-size' => self::DATA_SIZE,
+                    'data-dropup-auto' => 'false'
                 ]
             ])
             ->add('fournisseurs', EntityType::class, [
@@ -52,7 +54,8 @@ class ComposantType extends AbstractType
                     'multiple' => 'multiple',
                     'data-live-search' => true,
                     'data-size' => self::DATA_SIZE,
-                    'title' => 'Choisir'
+                    'title' => 'Choisir',
+                    'data-dropup-auto' => 'false'
                 ],
                 'help' => 'Vous pouvez choisir plusieurs parmis les fournisseurs.'
             ])

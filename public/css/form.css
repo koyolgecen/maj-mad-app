@@ -1,18 +1,11 @@
-.form-register {
+.form-custom {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin: 20px auto auto;
 }
-.form-register .form-control {
+.form-custom .form-control {
     position: relative;
     box-sizing: border-box;
     height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-.form-signin .form-control:focus {
-    z-index: 2;
-}
-.btn:hover {
-    color: pink !important;
+    font-size: 18px;
 }

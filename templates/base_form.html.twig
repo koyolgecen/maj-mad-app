@@ -1,0 +1,25 @@
+{# Formulaire commun #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% if h1 is defined %}
+        <h1 class="text-center mt-5">{{ h1 }}</h1>
+    {% endif %}
+    {{ form_start(form, {
+        'attr': {'class': 'form-custom' }
+    }) }}
+    {% block form %}
+    {% endblock %}
+    <div class="row text-center">
+        <div class="col-md-12 mt-3 mb-5">
+            <button type="submit" class="btn btn-success">{{ labelSubmit is defined ? labelSubmit : 'Enregistrer' }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

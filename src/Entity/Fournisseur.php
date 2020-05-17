@@ -47,6 +47,10 @@ class Fournisseur
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\b\d{5}\b/",
+     *     message="Cette valeur n'est pas un code postal valide."
+     * )
      */
     private $codePostale;
 

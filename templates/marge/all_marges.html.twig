@@ -26,8 +26,8 @@
                 {% for marge in marges %}
                     <tr>
                         <td>{{ marge.nom }}</td>
-                        <td>{{ marge.MargeEntreprise }}</td>
-                        <td>{{ marge.MargeCommerciale }}</td>
+                        <td>{{ marge.MargeEntreprise * 100 | number_format(2, '.', ',') }} %</td>
+                        <td>{{ marge.MargeCommerciale * 100 | number_format(2, '.', ',') }} %</td>
                         <td class="text-center">
                             <a class="btn btn-warning btn-sm"
                                data-toggle="tooltip" title="Modifier {{ marge.nom }}"

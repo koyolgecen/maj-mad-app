@@ -66,7 +66,7 @@ class CoupeDePrincipeController extends AbstractController
      *
      * @return RedirectResponse|Response
      *
-     * @Route("/fournisseur/edit/{id}", name="coupe_de_principe_edit")
+     * @Route("/coupe_de_principe/edit/{id}", name="coupe_de_principe_edit")
      */
     public function edit(CoupeDePrincipe $coupesPrincipe, Request $request, EntityManagerInterface $em)
     {
@@ -96,7 +96,7 @@ class CoupeDePrincipeController extends AbstractController
      *
      * @return RedirectResponse
      *
-     * @Route("/fournisseur/delete/{id}", name="coupe_de_principe_delete")
+     * @Route("/coupe_de_principe/delete/{id}", name="coupe_de_principe_delete")
      */
     public function delete(CoupeDePrincipe $coupesPrincipe, EntityManagerInterface $em)
     {

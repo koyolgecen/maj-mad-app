@@ -24,12 +24,12 @@ class Marge
     private $nom;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", scale=2)
      */
     private $MargeEntreprise;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", scale=2)
      */
     private $MargeCommerciale;
 
