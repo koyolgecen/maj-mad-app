@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\RegleCalcul;
 use App\Form\RegleCalculType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,10 +99,13 @@ class RegleCalculController extends AbstractController
      */
     public function delete(RegleCalcul $regleCalcul, EntityManagerInterface $em)
     {
-        $em->remove($regleCalcul);
-        $em->flush();
-
-        $this->addFlash('success', 'Règle de calcul supprimée avec succès !');
+        try {
+            $em->remove($regleCalcul);
+            $em->flush();
+            $this->addFlash('success', 'Règle de calcul supprimée avec succès !\'');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! La règle de calcul est liée aux modes de conception "%s" !', implode(',', $regleCalcul->getModeConceptions()->toArray())));
+        }
         return $this->redirectToRoute('regles_calcul');
     }
 }

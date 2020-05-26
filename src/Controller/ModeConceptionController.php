@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ModeConception;
 use App\Form\ModeConceptionType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,10 +99,13 @@ class ModeConceptionController extends AbstractController
      */
     public function delete(ModeConception $modeConception, EntityManagerInterface $em)
     {
-        $em->remove($modeConception);
-        $em->flush();
-
-        $this->addFlash('success', 'Mode de conception supprimé avec succès !');
+        try {
+            $em->remove($modeConception);
+            $em->flush();
+            $this->addFlash('success', 'Mode de conception supprimé avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! Le mode de conception est lié aux gammes "%s" !', implode(',', $modeConception->getGammes()->toArray())));
+        }
         return $this->redirectToRoute('modes_conception');
     }
 }

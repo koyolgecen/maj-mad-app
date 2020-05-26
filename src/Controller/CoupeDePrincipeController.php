@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CoupeDePrincipe;
 use App\Form\CoupeDePrincipeType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CoupeDePrincipeController extends AbstractController
 {
     /**
-     * @Route("/coupes-de-principe", name="coupe_de_principe")
+     * @Route("/coupes-de-principe", name="coupes_de_principe")
      */
     public function CoupesDePrincipe()
     {
@@ -34,7 +35,7 @@ class CoupeDePrincipeController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/coupe_de_principe-add", name="coupe_de_principe_add")
+     * @Route("/coupe-de-principe-add", name="coupe_de_principe_add")
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
@@ -49,8 +50,8 @@ class CoupeDePrincipeController extends AbstractController
             $em->persist($coupesPrincipe);
             $em->flush();
 
-            $this->addFlash('success', 'Nouvelle coupe de principe ajouté!');
-            return $this->redirectToRoute('coupe_de_principe');
+            $this->addFlash('success', 'Nouvelle coupe de principe ajoutée!');
+            return $this->redirectToRoute('coupes_de_principe');
         }
 
         return $this->render('coupe_de_principe/add.html.twig', [
@@ -66,7 +67,7 @@ class CoupeDePrincipeController extends AbstractController
      *
      * @return RedirectResponse|Response
      *
-     * @Route("/coupe_de_principe/edit/{id}", name="coupe_de_principe_edit")
+     * @Route("/coupe-de-principe/edit/{id}", name="coupe_de_principe_edit")
      */
     public function edit(CoupeDePrincipe $coupesPrincipe, Request $request, EntityManagerInterface $em)
     {
@@ -79,9 +80,7 @@ class CoupeDePrincipeController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Coupe de principe "%s" modifiée avec succès !', $coupesPrincipe->getNom()));
-            return $this->redirectToRoute('coupe_de_principe', [
-                'id' => $coupesPrincipe->getId()
-            ]);
+            return $this->redirectToRoute('coupes_de_principe');
         }
 
         return $this->render('coupe_de_principe/edit.html.twig', [
@@ -96,16 +95,18 @@ class CoupeDePrincipeController extends AbstractController
      *
      * @return RedirectResponse
      *
-     * @Route("/coupe_de_principe/delete/{id}", name="coupe_de_principe_delete")
+     * @Route("/coupe-de-principe/delete/{id}", name="coupe_de_principe_delete")
      */
     public function delete(CoupeDePrincipe $coupesPrincipe, EntityManagerInterface $em)
     {
-        $em->remove($coupesPrincipe);
-        $em->flush();
-
-        $this->addFlash('success', 'Coupe de principe supprimée avec succès !');
-        return $this->redirectToRoute('coupe_de_principe');
+        try {
+            $em->remove($coupesPrincipe);
+            $em->flush();
+            $this->addFlash('success', 'Coupe de principe supprimée avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! La coupe de principe est liée aux modules "%s" !', implode(',',
+                $coupesPrincipe->getModules()->toArray())));
+        }
+        return $this->redirectToRoute('coupes_de_principe');
     }
-
-
 }

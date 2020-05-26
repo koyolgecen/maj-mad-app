@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CCTP;
 use App\Form\CCTPType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -49,7 +50,7 @@ class CCTPController extends AbstractController
             $em->persist($cctp);
             $em->flush();
 
-            $this->addFlash('success', 'Nouveau cctp ajouté!');
+            $this->addFlash('success', 'Nouveau CCTP ajouté!');
             return $this->redirectToRoute('cctps');
         }
 
@@ -77,10 +78,8 @@ class CCTPController extends AbstractController
             $em->persist($cctp);
             $em->flush();
 
-            $this->addFlash('success', sprintf('cctp "%s" modifié avec succès !', $cctp->getNom()));
-            return $this->redirectToRoute('cctps', [
-                'id' => $cctp->getId()
-            ]);
+            $this->addFlash('success', sprintf('CCTP "%s" modifié avec succès !', $cctp->getNom()));
+            return $this->redirectToRoute('cctps');
         }
 
         return $this->render('cctp/edit.html.twig', [
@@ -100,10 +99,13 @@ class CCTPController extends AbstractController
      */
     public function delete(cctp $cctp, EntityManagerInterface $em)
     {
-        $em->remove($cctp);
-        $em->flush();
-
-        $this->addFlash('success', 'cctp supprimé avec succès!');
+        try {
+            $em->remove($cctp);
+            $em->flush();
+            $this->addFlash('success', 'CCTP supprimé avec succès!');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! Le CCTP est lié aux modules "%s" !', implode(',', $cctp->getModules()->toArray())));
+        }
         return $this->redirectToRoute('cctps');
     }
 

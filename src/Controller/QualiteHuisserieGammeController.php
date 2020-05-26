@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\QualiteHuisserieGamme;
 use App\Form\QualiteHuisserieGammeType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,10 +99,13 @@ class QualiteHuisserieGammeController extends AbstractController
      */
     public function delete(QualiteHuisserieGamme $qualiteHuisserie, EntityManagerInterface $em)
     {
-        $em->remove($qualiteHuisserie);
-        $em->flush();
-
-        $this->addFlash('success', 'Qualité huisserie supprimée avec succès !');
+        try {
+            $em->remove($qualiteHuisserie);
+            $em->flush();
+            $this->addFlash('success', 'Qualité huisserie supprimée avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! La qualité huisserie  est liée aux gammes "%s" !', implode(',', $qualiteHuisserie->getGammes()->toArray())));
+        }
         return $this->redirectToRoute('qualites_huisseries');
     }
 }

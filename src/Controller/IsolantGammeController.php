@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\IsolantGamme;
 use App\Form\IsolantGammeType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +17,7 @@ class IsolantGammeController extends AbstractController
     /**
      * @Route("/isolants", name="isolants")
      */
-    public function fournisseurs()
+    public function isolants()
     {
         //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var IsolantGamme[] $isolants */
@@ -78,9 +79,7 @@ class IsolantGammeController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Isolant "%s" modifié avec succès !', $isolant->getNom()));
-            return $this->redirectToRoute('isolants', [
-                'id' => $isolant->getId()
-            ]);
+            return $this->redirectToRoute('isolants');
         }
 
         return $this->render('isolant_gamme/edit.html.twig', [
@@ -99,10 +98,13 @@ class IsolantGammeController extends AbstractController
      */
     public function delete(IsolantGamme $isolant, EntityManagerInterface $em)
     {
-        $em->remove($isolant);
-        $em->flush();
-
-        $this->addFlash('success', 'Isolant supprimé avec succès !');
+        try {
+            $em->remove($isolant);
+            $em->flush();
+            $this->addFlash('success', 'Isolant supprimé avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! L\'isolant est lié aux gammes "%s" !', implode(',', $isolant->getGammes()->toArray())));
+        }
         return $this->redirectToRoute('isolants');
     }
 }

@@ -16,7 +16,7 @@ class GammeController extends AbstractController
     /**
      * @Route("/gammes", name="gammes")
      */
-    public function fournisseurs()
+    public function gammes()
     {
         //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var Gamme[] $gammes */
@@ -78,9 +78,7 @@ class GammeController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Gamme "%s" modifiée avec succès !', $gamme->getNom()));
-            return $this->redirectToRoute('gammes', [
-                'id' => $gamme->getId()
-            ]);
+            return $this->redirectToRoute('gammes');
         }
 
         return $this->render('gamme/edit.html.twig', [

@@ -48,9 +48,20 @@ class Module
      */
     private $moduleComposant;
 
+    /**
+     * Module constructor.
+     */
     public function __construct()
     {
         $this->moduleComposant = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->nom;
     }
 
     public function getId(): ?int

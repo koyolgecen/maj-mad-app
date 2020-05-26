@@ -100,6 +100,88 @@
                                 </a>
                             {% endif %}
                         </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'coupe' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('coupes_de_principe') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Coupes de principe</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'cctp' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('cctps') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>CCTP</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'module' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modules') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Modules</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'regle' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('regles_calcul') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Règles de calcul</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'mode' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modes_conception') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Modes de conception</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'isolant' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('isolants') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Isolants</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'couverture' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('couvertures') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Couvertures</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'qualite' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('qualites_huisseries') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Qualités huisseries</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'finition' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('finitions_exterieures') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Finitions Extérieures</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'gamme' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('gammes') }}">
+                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Gammes</span>
+                                </a>
+                            {% endif %}
+                        </li>
                     </ul>
                     <div class="text-center d-none d-md-inline">
                         <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>

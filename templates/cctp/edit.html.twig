@@ -1,16 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_form.html.twig' %}
 
-{% block title %}Ajouter cctp{% endblock %}
+{% set title = 'Modifier un CCTP' %}
+{% set h1 = 'Modification CCTP' %}
+{% set labelSubmit = 'Modifier' %}
 
-{% block body %}
-    {{ form_start(form) }}
-
-    {{ form_widget(form) }}
-
-    <div class="row text-center">
-        <div class="col-md-12 mt-3 mb-3">
-            <button type="submit" class="btn btn-success">Modifier</button>
+{% block form %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.nom) }}
         </div>
     </div>
-    {{ form_end(form) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.longueur) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.largeur) }}
+        </div>
+    </div>
 {% endblock %}

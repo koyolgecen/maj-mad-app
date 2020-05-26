@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\FinitionExterieurGamme;
 use App\Form\FinitionExterieurGammeType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,10 +99,13 @@ class FinitionExterieurGammeController extends AbstractController
      */
     public function delete(FinitionExterieurGamme $finitionExterieur, EntityManagerInterface $em)
     {
-        $em->remove($finitionExterieur);
-        $em->flush();
-
-        $this->addFlash('success', 'Finition extérieure supprimée avec succès !');
+        try {
+            $em->remove($finitionExterieur);
+            $em->flush();
+            $this->addFlash('success', 'Finition extérieure supprimée avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! La finition extérieure est liée aux gammes "%s" !', implode(',', $finitionExterieur->getGammes()->toArray())));
+        }
         return $this->redirectToRoute('finitions_exterieures');
     }
 }

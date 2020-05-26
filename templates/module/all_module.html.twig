@@ -18,10 +18,10 @@
             <thead>
             <tr>
                 <th>Nom</th>
-                <th>quantite</th>
-                <th>coupe de principe</th>
-                <th>cctp</th>
-                <th>composant</th>
+                <th>Quantité</th>
+                <th>Coupe de principe</th>
+                <th>CCTP</th>
+                <th>Composants</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -29,9 +29,11 @@
             {% for module in modules %}
                 <tr>
                     <td>{{module.nom}}</td>
-                    <td>{{module.quantite}}</td>
+                    <td>{{module.quantite | number_format(0, ' ', ' ')}}</td>
                     <td>{{module.coupeDePrincipe}}</td>
-                    <td>{{module.cctp}}</td>
+                    <td {% if module.cctp %}title="Longueur : {{ module.cctp.longueur }}&nbsp;Largeur : {{ module.cctp.largeur }}"{% endif %}>
+                        {{module.cctp}}
+                    </td>
                     <td>{% for composant in module.moduleComposant %}{{ composant.nature }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"

@@ -77,9 +77,7 @@ class ModuleController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('module "%s" modifié avec succès !', $module->getNom()));
-            return $this->redirectToRoute('modules', [
-                'id' => $module->getId()
-            ]);
+            return $this->redirectToRoute('modules');
         }
 
         return $this->render('module/edit.html.twig', [

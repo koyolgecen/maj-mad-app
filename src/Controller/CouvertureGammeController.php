@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CouvertureGamme;
 use App\Form\CouvertureGammeType;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,10 +99,13 @@ class CouvertureGammeController extends AbstractController
      */
     public function delete(CouvertureGamme $couverture, EntityManagerInterface $em)
     {
-        $em->remove($couverture);
-        $em->flush();
-
-        $this->addFlash('success', 'Couverture supprimée avec succès !');
+        try {
+            $em->remove($couverture);
+            $em->flush();
+            $this->addFlash('success', 'Couverture supprimée avec succès !');
+        } catch (DBALException $exception) {
+            $this->addFlash('danger', sprintf('Suppression impossible ! La couverture est liée aux gammes "%s" !', implode(',', $couverture->getGammes()->toArray())));
+        }
         return $this->redirectToRoute('couvertures');
     }
 }
