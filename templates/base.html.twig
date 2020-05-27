@@ -30,7 +30,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link {% if 'app_user' in app.request.get('_route') or 'app_register' in app.request.get('_route') %}active{% endif %}"
+                                <a class="nav-link {% if 'app_user' in app.request.get('_route') or 'app_register' in app.request.get('_route') or 'account' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('app_users') }}">
                                     <i class="fas fa-users"></i>&nbsp;<span>Utilisateurs</span>
                                 </a>
@@ -77,7 +77,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'caracteristiques' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('caracteristiques_nature') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Caractéristiques nature</span>
+                                    <i class="fas fa-bezier-curve"></i>&nbsp;<span>Caractéristiques nature</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -85,7 +85,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'unite' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('unites') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Unités nature</span>
+                                    <i class="fas fa-broom"></i>&nbsp;<span>Unités nature</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -96,7 +96,7 @@
                                     or 'nature_edit' == app.request.get('_route')
                                 %}active{% endif %}"
                                    href="{{ path('natures') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Natures</span>
+                                    <i class="fas fa-air-freshener"></i>&nbsp;<span>Natures</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -105,7 +105,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'coupe' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('coupes_de_principe') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Coupes de principe</span>
+                                    <i class="fas fa-cut"></i>&nbsp;<span>Coupes de principe</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -113,7 +113,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'cctp' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('cctps') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>CCTP</span>
+                                    <i class="fas fa-book-open"></i>&nbsp;<span>CCTP</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -121,7 +121,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'module' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('modules') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Modules</span>
+                                    <i class="fas fa-cubes"></i>&nbsp;<span>Modules</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -130,7 +130,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'regle' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('regles_calcul') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Règles de calcul</span>
+                                    <i class="fas fa-ruler"></i>&nbsp;<span>Règles de calcul</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -138,7 +138,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'mode' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('modes_conception') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Modes de conception</span>
+                                    <i class="fas fa-highlighter"></i>&nbsp;<span>Modes de conception</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -146,7 +146,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'isolant' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('isolants') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Isolants</span>
+                                    <i class="fas fa-home"></i>&nbsp;<span>Isolants</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -154,7 +154,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'couverture' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('couvertures') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Couvertures</span>
+                                    <i class="fas fa-hockey-puck"></i>&nbsp;<span>Couvertures</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -162,7 +162,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'qualite' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('qualites_huisseries') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Qualités huisseries</span>
+                                    <i class="fas fa-scroll"></i>&nbsp;<span>Qualités huisseries</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -170,7 +170,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'finition' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('finitions_exterieures') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Finitions Extérieures</span>
+                                    <i class="fas fa-door-open"></i>&nbsp;<span>Finitions Extérieures</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -178,7 +178,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'gamme' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('gammes') }}">
-                                    <i class="fas fa-map-signs"></i>&nbsp;<span>Gammes</span>
+                                    <i class="fas fa-landmark"></i>&nbsp;<span>Gammes</span>
                                 </a>
                             {% endif %}
                         </li>
@@ -195,8 +195,16 @@
                             <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
                                 <i class="fas fa-bars"></i>
                             </button>
+                            {% if icon is defined %}
+                                <i class="fas {{ icon }} fa-2x"></i>&nbsp;
+                            {% endif %}
+                            {% if iconLabel is defined %}
+                                <span class="ml-2 mr-4" style="font-size: 23px">
+                                    {{ iconLabel }}
+                                </span>
+                            {% endif %}
                             <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Rechercher ...">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary py-0" type="button">
                                             <i class="fas fa-search"></i>
