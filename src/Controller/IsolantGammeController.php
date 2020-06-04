@@ -6,12 +6,19 @@ use App\Entity\IsolantGamme;
 use App\Form\IsolantGammeType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class IsolantGammeController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class IsolantGammeController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class IsolantGammeController extends AbstractController
      */
     public function isolants()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var IsolantGamme[] $isolants */
         $isolants = $this->getDoctrine()->getRepository( IsolantGamme::class)->findAll();
 
@@ -39,7 +45,6 @@ class IsolantGammeController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(IsolantGammeType::class);
 
         $form->handleRequest($request);

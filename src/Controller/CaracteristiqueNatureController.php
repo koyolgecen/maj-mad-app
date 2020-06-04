@@ -6,12 +6,19 @@ use App\Entity\CaracteristiqueNature;
 use App\Form\CaracteristiqueNatureType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CaracteristiqueNatureController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class CaracteristiqueNatureController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class CaracteristiqueNatureController extends AbstractController
      */
     public function caracs()
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var CaracteristiqueNature[] $caracs */
         $caracs = $this->getDoctrine()->getRepository( CaracteristiqueNature::class)->findAll();
 
@@ -39,7 +45,6 @@ class CaracteristiqueNatureController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(CaracteristiqueNatureType::class);
 
         $form->handleRequest($request);

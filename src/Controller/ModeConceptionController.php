@@ -6,12 +6,19 @@ use App\Entity\ModeConception;
 use App\Form\ModeConceptionType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ModeConceptionController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class ModeConceptionController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class ModeConceptionController extends AbstractController
      */
     public function modesConception()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var ModeConception[] $modesConception */
         $modesConception = $this->getDoctrine()->getRepository( ModeConception::class)->findAll();
 
@@ -38,7 +44,6 @@ class ModeConceptionController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(ModeConceptionType::class);
 
         $form->handleRequest($request);

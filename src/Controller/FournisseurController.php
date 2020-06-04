@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class FournisseurController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class FournisseurController extends AbstractController
 {
     /**
@@ -18,7 +25,6 @@ class FournisseurController extends AbstractController
      */
     public function fournisseurs()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var Fournisseur[] $fournisseurs */
         $fournisseurs = $this->getDoctrine()->getRepository( Fournisseur::class)->findAll();
 
@@ -37,7 +43,6 @@ class FournisseurController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(FournisseurType::class);
 
         $form->handleRequest($request);

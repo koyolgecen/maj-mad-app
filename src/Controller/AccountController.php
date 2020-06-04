@@ -95,6 +95,7 @@ class AccountController extends AbstractController
      */
     public function delete(User $user, EntityManagerInterface $em)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($user === $this->getUser()) {
             $this->addFlash('danger', sprintf('Vous êtes connecté en tant que %s vous ne pouvez pas vous supprimer vous-même!', $this->getUser()->getUsername()));
         } else {

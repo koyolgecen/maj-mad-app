@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\Projet;
 use App\Form\ProjetType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ProjetController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
+ */
 class ProjetController extends AbstractController
 {
     /**
@@ -18,7 +25,6 @@ class ProjetController extends AbstractController
      */
     public function projets()
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var Projet[] $projets */
         $projets = $this->getDoctrine()->getRepository( Projet::class)->findAll();
 
@@ -37,7 +43,6 @@ class ProjetController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(ProjetType::class);
 
         $form->handleRequest($request);

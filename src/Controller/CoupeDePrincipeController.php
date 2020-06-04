@@ -6,12 +6,19 @@ use App\Entity\CoupeDePrincipe;
 use App\Form\CoupeDePrincipeType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CoupeDePrincipeController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class CoupeDePrincipeController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class CoupeDePrincipeController extends AbstractController
      */
     public function CoupesDePrincipe()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var CoupeDePrincipe[] $coupesPrincipe */
         $coupesPrincipe = $this->getDoctrine()->getRepository( CoupeDePrincipe::class)->findAll();
 
@@ -39,7 +45,6 @@ class CoupeDePrincipeController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(CoupeDePrincipeType::class);
 
         $form->handleRequest($request);

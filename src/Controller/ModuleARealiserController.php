@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\ModuleARealiser;
 use App\Form\ModuleARealiserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ModuleARealiserController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
+ */
 class ModuleARealiserController extends AbstractController
 {
     /**
@@ -18,7 +25,6 @@ class ModuleARealiserController extends AbstractController
      */
     public function modules()
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var ModuleARealiser[] $modules */
         $modules = $this->getDoctrine()->getRepository( ModuleARealiser::class)->findAll();
 
@@ -37,7 +43,6 @@ class ModuleARealiserController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(ModuleARealiserType::class);
 
         $form->handleRequest($request);

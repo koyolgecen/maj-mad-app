@@ -5,21 +5,26 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ClientController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
+ */
 class ClientController extends AbstractController
 {
-
     /**
      * @Route("/clients", name="clients")
      */
     public function clients()
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var Client[] $clients */
         $clients = $this->getDoctrine()->getRepository( Client::class)->findAll();
 
@@ -38,7 +43,6 @@ class ClientController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(ClientType::class);
 
         $form->handleRequest($request);
@@ -59,7 +63,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Client $unite
+     * @param Client $client
      * @param Request $request
      * @param EntityManagerInterface $em
      *

@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\Gamme;
 use App\Form\GammeType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class GammeController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class GammeController extends AbstractController
 {
     /**
@@ -18,7 +25,6 @@ class GammeController extends AbstractController
      */
     public function gammes()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var Gamme[] $gammes */
         $gammes = $this->getDoctrine()->getRepository( Gamme::class)->findAll();
 
@@ -38,7 +44,6 @@ class GammeController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(GammeType::class);
 
         $form->handleRequest($request);

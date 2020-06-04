@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\Marge;
 use App\Form\MargeType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class MargeController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class MargeController extends AbstractController
 {
     /**
@@ -18,7 +25,6 @@ class MargeController extends AbstractController
      */
     public function marges()
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         /** @var Marge[] $marges */
         $marges = $this->getDoctrine()->getRepository( Marge::class)->findAll();
 
@@ -37,7 +43,6 @@ class MargeController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(MargeType::class);
 
         $form->handleRequest($request);

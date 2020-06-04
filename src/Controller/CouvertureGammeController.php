@@ -6,12 +6,19 @@ use App\Entity\CouvertureGamme;
 use App\Form\CouvertureGammeType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CouvertureGammeController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class CouvertureGammeController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class CouvertureGammeController extends AbstractController
      */
     public function couvertures()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var CouvertureGamme[] $couvertures */
         $couvertures = $this->getDoctrine()->getRepository( CouvertureGamme::class)->findAll();
 
@@ -38,7 +44,6 @@ class CouvertureGammeController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(CouvertureGammeType::class);
 
         $form->handleRequest($request);

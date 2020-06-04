@@ -6,12 +6,19 @@ use App\Entity\CCTP;
 use App\Form\CCTPType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CCTPController
+ * @package App\Controller
+ *
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ */
 class CCTPController extends AbstractController
 {
     /**
@@ -19,7 +26,6 @@ class CCTPController extends AbstractController
      */
     public function cctps()
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         /** @var CCTP[] $cctp */
         $cctp = $this->getDoctrine()->getRepository( CCTP::class)->findAll();
 
@@ -39,7 +45,6 @@ class CCTPController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //$this->denyAccessUnlessGranted('ROLE_BUREAU_DETUDE');
         $form = $this->createForm(CCTPType::class);
 
         $form->handleRequest($request);
