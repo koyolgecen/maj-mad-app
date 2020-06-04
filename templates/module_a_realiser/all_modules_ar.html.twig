@@ -2,14 +2,17 @@
 
 {% block title %}Modules à réaliser{% endblock %}
 
+{% set icon = 'fa-cubes' %}
+{% set iconLabel = 'Modules à réaliser' %}
+
 {% block body %}
     <h1 class="text-dark text-center mb-3">
         <span class="badge badge-pill badge-dark">{{ modules | length }}</span>
-        Modules
+        Modules à réaliser
     </h1>
     <div class="text-center mb-3">
         <a class="btn btn-success" href="{{ path('module_ar_add') }}">
-            <i class="fas fa-plus mr-2"></i>Ajouter un nouveau module
+            <i class="fas fa-plus mr-2"></i>Ajouter un nouveau module à réaliser
         </a>
     </div>
 
@@ -17,7 +20,7 @@
         <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
             <thead>
             <tr>
-                <th>Nom module</th>
+                <th>Nom</th>
                 <th>Mode de conception</th>
                 <th>Longueur</th>
                 <th>Largeur</th>

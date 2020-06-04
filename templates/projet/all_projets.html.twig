@@ -1,6 +1,9 @@
 {% extends 'base_datatable.html.twig' %}
 
-{% block title %}Clients{% endblock %}
+{% block title %}Projets{% endblock %}
+
+{% set icon = 'fa-paperclip' %}
+{% set iconLabel = 'Projets' %}
 
 {% block body %}
     <h1 class="text-dark text-center mb-3">
@@ -18,11 +21,12 @@
             <thead>
             <tr>
                 <th>Type</th>
-                <th>Date de création</th>
                 <th>Référence</th>
                 <th>Client</th>
                 <th>Produits</th>
                 <th>Modèles</th>
+                <th>Date de création</th>
+                <th>Dernière modification</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -30,11 +34,12 @@
             {% for projet in projets %}
                 <tr>
                     <td>{{ projet.type }}</td>
-                    <td>{{ projet.dateCreation|date('d/m/y') }}</td>
                     <td>{{ projet.reference }}</td>
                     <td>{{ projet.client }}</td>
                     <td>{% for produit in projet.produits %}{{ produit.nom }}<br>{% endfor %}</td>
                     <td>{% for modele in projet.modeles %}{{ modele.nom }}<br>{% endfor %}</td>
+                    <td>{{ projet.createdAt | format_datetime(locale='fr') }}</td>
+                    <td>{{ projet.updatedAt | format_datetime(locale='fr') }}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ projet.type }}"

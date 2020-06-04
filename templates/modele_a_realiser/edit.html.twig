@@ -1,16 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_form.html.twig' %}
 
-{% block title %}Modifier un modèle à réaliser{% endblock %}
+{% set icon = 'fa-lightbulb' %}
+{% set iconLabel = 'Modèles à réaliser' %}
 
-{% block body %}
-    {{ form_start(form) }}
+{% set title = 'Modifier un modèle à réaliser' %}
+{% set h1 = 'Modification modèle à réaliser' %}
+{% set labelSubmit = 'Modifier' %}
 
+{% block form %}
     {{ form_widget(form) }}
-
-    <div class="row text-center">
-        <div class="col-md-12 mt-3 mb-3">
-            <button type="submit" class="btn btn-success">Modifier</button>
-        </div>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

@@ -58,7 +58,7 @@ class ProjetController extends AbstractController
     }
 
     /**
-     * @param Projet $unite
+     * @param Projet $projet
      * @param Request $request
      * @param EntityManagerInterface $em
      *
@@ -78,9 +78,7 @@ class ProjetController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Projet "%s" modifié avec succès !', $projet->getType()));
-            return $this->redirectToRoute('projet_edit', [
-                'id' => $projet->getId()
-            ]);
+            return $this->redirectToRoute('projets');
         }
 
         return $this->render('projet/edit.html.twig', [

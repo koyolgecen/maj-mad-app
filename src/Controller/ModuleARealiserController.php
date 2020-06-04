@@ -58,7 +58,7 @@ class ModuleARealiserController extends AbstractController
     }
 
     /**
-     * @param ModuleARealiser $unite
+     * @param ModuleARealiser $module
      * @param Request $request
      * @param EntityManagerInterface $em
      *
@@ -78,14 +78,11 @@ class ModuleARealiserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Module "%s" modifié avec succès !', $module->getNom()));
-            return $this->redirectToRoute('module_ar_edit', [
-                'id' => $module->getId()
-            ]);
+            return $this->redirectToRoute('modules_ar');
         }
 
         return $this->render('module_a_realiser/edit.html.twig', [
-            'form' => $form->createView(),
-            'user' => $module
+            'form' => $form->createView()
         ]);
     }
 

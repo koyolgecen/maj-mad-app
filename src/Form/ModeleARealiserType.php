@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\ModeleARealiser;
 use App\Entity\ModuleARealiser;
-use App\Entity\Projet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModeleARealiserType extends AbstractType
 {
+    private const DATA_SIZE = 5;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -19,10 +20,15 @@ class ModeleARealiserType extends AbstractType
             ->add('modules', EntityType::class, [
                 'class' => ModuleARealiser::class,
                 'multiple' => true,
-                'expanded' => true,
-                'label_attr' => [
-                    'class' => 'checkbox-custom'
-                ]
+                'attr' => [
+                    'class' => 'selectpicker show-tick',
+                    'multiple' => 'multiple',
+                    'data-live-search' => true,
+                    'data-size' => self::DATA_SIZE,
+                    'title' => 'Choisir',
+                    'data-dropup-auto' => 'false'
+                ],
+                'help' => 'Vous pouvez choisir plusieurs parmis les modules.'
             ])
         ;
     }

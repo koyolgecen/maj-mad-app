@@ -1,16 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_form.html.twig' %}
 
-{% block title %}Modifier un produit{% endblock %}
+{% set icon = 'fa-monument' %}
+{% set iconLabel = 'Produits' %}
 
-{% block body %}
-    {{ form_start(form) }}
+{% set title = 'Modifier un produit' %}
+{% set h1 = 'Modification produit' %}
+{% set labelSubmit = 'Modifier' %}
 
+{% block form %}
     {{ form_widget(form) }}
-
-    <div class="row text-center">
-        <div class="col-md-12 mt-3 mb-3">
-            <button type="submit" class="btn btn-success">Modifier</button>
-        </div>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

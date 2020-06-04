@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjetRepository")
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Projet
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,11 +28,6 @@ class Projet
      * @ORM\Column(type="string", length=50)
      */
     private $type;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateCreation;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -76,18 +74,6 @@ class Projet
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getDateCreation(): ?\DateTimeInterface
-    {
-        return $this->dateCreation;
-    }
-
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
-    {
-        $this->dateCreation = $dateCreation;
 
         return $this;
     }

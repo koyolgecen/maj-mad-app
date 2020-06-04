@@ -190,6 +190,49 @@
                                 </a>
                             {% endif %}
                         </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'produit' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('produits') }}">
+                                    <i class="fas fa-monument"></i>&nbsp;<span>Produits</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'projet' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('projets') }}">
+                                    <i class="fas fa-paperclip"></i>&nbsp;<span>Projets</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'client' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('clients') }}">
+                                    <i class="fas fa-address-book"></i>&nbsp;<span>Clients</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'module' in app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modules_ar') }}">
+                                    <i class="fas fa-cubes"></i>&nbsp;<span>Modules à réaliser</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'modele' in app.request.get('_route') %}active{% endif %}" href="{{ path('modeles_ar') }}">
+                                    <i class="fas fa-lightbulb"></i>&nbsp;<span>Modèles à réaliser</span>
+                                </a>
+                            {% endif %}
+                        </li>
                     </ul>
                     <div class="text-center d-none d-md-inline">
                         <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>

@@ -14,13 +14,13 @@ class ClientFixtures extends BaseFixture
     {
         $this->createMany(20, 'clients', function() {
             $client = new Client();
-            $client->setNom($this->faker->company);
-            $client->setPrenom($this->faker->company);
+            $client->setNom($this->faker->lastName);
+            $client->setPrenom($this->faker->firstName);
             $client->setAdresse($this->faker->address);
             $client->setVille($this->faker->city);
             $client->setCodePostale($this->faker->postcode);
             $client->setTelephone($this->faker->phoneNumber);
-            $client->setMail($this->faker->companyEmail);
+            $client->setMail($this->faker->email);
             return $client;
         });
         $manager->flush();

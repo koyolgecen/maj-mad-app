@@ -1,16 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_form.html.twig' %}
 
-{% block title %}Ajouter un modèle à réaliser{% endblock %}
+{% set icon = 'fa-lightbulb' %}
+{% set iconLabel = 'Modèles à réaliser' %}
 
-{% block body %}
-    {{ form_start(form) }}
+{% set title = 'Ajouter un modèle à réaliser' %}
+{% set h1 = 'Création d\'un modèle à réaliser' %}
 
+{% block form %}
     {{ form_widget(form) }}
-
-    <div class="row text-center">
-        <div class="col-md-12 mt-3 mb-3">
-            <button type="submit" class="btn btn-success">Enregistrer</button>
-        </div>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

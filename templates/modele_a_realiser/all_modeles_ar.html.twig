@@ -2,14 +2,17 @@
 
 {% block title %}Modèles à réaliser{% endblock %}
 
+{% set icon = 'fa-lightbulb' %}
+{% set iconLabel = 'Modèles à réaliser' %}
+
 {% block body %}
     <h1 class="text-dark text-center mb-3">
         <span class="badge badge-pill badge-dark">{{ modeles | length }}</span>
-        Modeles
+        Modèles à réaliser
     </h1>
     <div class="text-center mb-3">
         <a class="btn btn-success" href="{{ path('modele_ar_add') }}">
-            <i class="fas fa-plus mr-2"></i>Ajouter un nouveau modèle
+            <i class="fas fa-plus mr-2"></i>Ajouter un nouveau modèle à réaliser
         </a>
     </div>
 
