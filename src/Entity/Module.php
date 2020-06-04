@@ -49,11 +49,17 @@ class Module
     private $moduleComposant;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modele", mappedBy="modules")
+     */
+    private $modeles;
+
+    /**
      * Module constructor.
      */
     public function __construct()
     {
         $this->moduleComposant = new ArrayCollection();
+        $this->modeles = new ArrayCollection();
     }
 
     /**
@@ -146,6 +152,34 @@ class Module
     {
         if ($this->moduleComposant->contains($module_composant)) {
             $this->moduleComposant->removeElement($module_composant);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Modele[]
+     */
+    public function getModeles(): Collection
+    {
+        return $this->modeles;
+    }
+
+    public function addModele(Modele $modele): self
+    {
+        if (!$this->modeles->contains($modele)) {
+            $this->modeles[] = $modele;
+            $modele->addModule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModele(Modele $modele): self
+    {
+        if ($this->modeles->contains($modele)) {
+            $this->modeles->removeElement($modele);
+            $modele->removeModule($this);
         }
 
         return $this;

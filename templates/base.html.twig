@@ -128,6 +128,14 @@
                         <div class="dropdown-divider"></div>
                         <li class="nav-item" role="presentation">
                             {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link {% if 'modele' in app.request.get('_route') %}active{% endif %}" href="{{ path('modeles') }}">
+                                    <i class="fas fa-lightbulb"></i>&nbsp;<span>Modèles</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item" role="presentation">
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <a class="nav-link {% if 'regle' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('regles_calcul') }}">
                                     <i class="fas fa-ruler"></i>&nbsp;<span>Règles de calcul</span>
@@ -136,7 +144,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link {% if 'mode' in app.request.get('_route') %}active{% endif %}"
+                                <a class="nav-link {% if 'conception' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('modes_conception') }}">
                                     <i class="fas fa-highlighter"></i>&nbsp;<span>Modes de conception</span>
                                 </a>

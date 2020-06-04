@@ -7,6 +7,7 @@ use App\Entity\FinitionExterieurGamme;
 use App\Entity\Gamme;
 use App\Entity\IsolantGamme;
 use App\Entity\ModeConception;
+use App\Entity\Modele;
 use App\Entity\QualiteHuisserieGamme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -61,6 +62,11 @@ class GammeType extends AbstractType
                 'placeholder' => 'Choisir',
                 'attr' => $attr,
                 'required' => false
+            ])
+            ->add('modele', EntityType::class, [
+                'class' => Modele::class,
+                'placeholder' => 'Choisir',
+                'attr' => $attr
             ])
         ;
 

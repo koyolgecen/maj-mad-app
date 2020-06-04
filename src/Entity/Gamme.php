@@ -59,6 +59,12 @@ class Gamme
      */
     private $produits;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Modele", inversedBy="gammes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $modele;
+
     public function __toString()
     {
         return $this->nom;
@@ -173,6 +179,18 @@ class Gamme
                 $produit->setGamme(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getModele(): ?Modele
+    {
+        return $this->modele;
+    }
+
+    public function setModele(?Modele $modele): self
+    {
+        $this->modele = $modele;
 
         return $this;
     }
