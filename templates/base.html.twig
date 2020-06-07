@@ -104,14 +104,19 @@
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link {% if 'module' in app.request.get('_route') %}active{% endif %}"
+                                <a class="nav-link {% if 'modules' == app.request.get('_route')
+                                    or 'module_add' == app.request.get('_route')
+                                    or 'module_edit' == app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('modules') }}">
                                     <i class="fas fa-cubes"></i>&nbsp;<span>Modules</span>
                                 </a>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link {% if 'modele' in app.request.get('_route') %}active{% endif %}" href="{{ path('modeles') }}">
+                                <a class="nav-link {% if 'modeles' == app.request.get('_route')
+                                    or 'modele_add' == app.request.get('_route')
+                                    or 'modele_edit' == app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modeles') }}">
                                     <i class="fas fa-lightbulb"></i>&nbsp;<span>Modèles</span>
                                 </a>
                             </li>
@@ -184,13 +189,18 @@
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link {% if 'module' in app.request.get('_route') %}active{% endif %}"
+                                <a class="nav-link {% if 'modules_ar' == app.request.get('_route')
+                                    or 'module_ar_add' == app.request.get('_route')
+                                    or 'module_ar_edit' == app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('modules_ar') }}">
                                     <i class="fas fa-cubes"></i>&nbsp;<span>Modules à réaliser</span>
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link {% if 'modele' in app.request.get('_route') %}active{% endif %}" href="{{ path('modeles_ar') }}">
+                                <a class="nav-link {% if 'modeles_ar' == app.request.get('_route')
+                                    or 'modele_ar_add' == app.request.get('_route')
+                                    or 'modele_ar_edit' == app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modeles_ar') }}">
                                     <i class="fas fa-lightbulb"></i>&nbsp;<span>Modèles à réaliser</span>
                                 </a>
                             </li>
@@ -433,7 +443,7 @@
         </script>
         <!-- https://sweetalert2.github.io/ -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-        <!-- Si utilisé n'est pas oublier de mettre la class "confirm" et le "data-to-delete" qui représente le nom du donnée à supprimer -->
+        <!-- Si utilisé ne pas oublier de mettre la class "confirm" et le "data-to-delete" qui représente le nom du donnée à supprimer -->
         <script src="{{ asset('js/sweetalert.js') }}"></script>
 
         <!-- Latest compiled and minified JavaScript -->
