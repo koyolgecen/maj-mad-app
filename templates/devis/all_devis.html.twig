@@ -1,0 +1,56 @@
+{% extends 'base_datatable.html.twig' %}
+
+{% set icon = 'fa-marker' %}
+{% set iconLabel = 'Devis' %}
+
+{% block title %}Devis{% endblock %}
+
+{% block body %}
+    <h1 class="text-dark text-center mb-3">
+        <span class="badge badge-pill badge-dark">{{ devis | length }}</span>
+        Devis
+    </h1>
+    <div class="text-center mb-3">
+        <a class="btn btn-success" href="{{ path('devis_add') }}">
+            <i class="fas fa-plus mr-2"></i>Ajouter nouveau devis
+        </a>
+    </div>
+
+    <div class="mb-5">
+        <table class="table table-striped table-bordered dt-responsive nowrap datatableCustom" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Projet</th>
+                <th>Etat</th>
+                <th>Paiement échelonné</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dev in devis %}
+                <tr>
+                    <td>{{ dev.nom }}</td>
+                    <td>{{ dev.projet }}</td>
+                    <td>{{ dev.etat }}</td>
+                    <td>{{ dev.paiementEchelonne }}</td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm"
+                           data-toggle="tooltip" title="Modifier {{ dev.nom }}"
+                           href="{{ path('devis_edit', { 'id': dev.id }) }}">
+                            <i class="fas fa-edit fa-sm"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                           data-to-delete="{{ dev.nom }}"
+                           data-toggle="tooltip" title="Supprimer {{ dev.nom }}"
+                           href="{{ path('devis_delete', { 'id': dev.id }) }}">
+                            <i class="fas fa-trash fa-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

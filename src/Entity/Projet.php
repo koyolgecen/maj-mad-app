@@ -50,6 +50,11 @@ class Projet
      */
     private $modeles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="projet")
+     */
+    private $devis;
+
     public function __toString()
     {
         return $this->type;
@@ -59,6 +64,7 @@ class Projet
     {
         $this->produits = new ArrayCollection();
         $this->modeles = new ArrayCollection();
+        $this->devis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +159,37 @@ class Projet
             // set the owning side to null (unless already changed)
             if ($modele->getProjet() === $this) {
                 $modele->setProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Devis[]
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis[] = $devi;
+            $devi->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->contains($devi)) {
+            $this->devis->removeElement($devi);
+            // set the owning side to null (unless already changed)
+            if ($devi->getProjet() === $this) {
+                $devi->setProjet(null);
             }
         }
 

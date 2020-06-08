@@ -1,0 +1,12 @@
+{% extends 'base_form.html.twig' %}
+
+{% set icon = 'fa-step-forward' %}
+{% set iconLabel = 'Etats devis' %}
+
+{% set title = 'Modifier un état devis' %}
+{% set h1 = 'Modification état devis' %}
+{% set labelSubmit = 'Modifier' %}
+
+{% block form %}
+    {{ form_widget(form) }}
+{% endblock %}

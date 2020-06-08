@@ -1,0 +1,11 @@
+{% extends 'base_form.html.twig' %}
+
+{% set icon = 'fa-euro-sign' %}
+{% set iconLabel = 'Paiements échelonnés' %}
+
+{% set title = 'Ajouter un paiement échelonné' %}
+{% set h1 = 'Création d\'un paiement échelonné' %}
+
+{% block form %}
+    {{ form_widget(form) }}
+{% endblock %}
