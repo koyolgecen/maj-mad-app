@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% set icon = 'fa-marker' %}
+{% set iconLabel = 'Devis' %}
+
+{% block title %}Devis {{ devis }}{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="p-5">
+            <img class="card-img" src="{{ asset('images/maisons/' ~ random(1, 9) ~ '.jpg') }}" alt="maison">
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Nom du devis - {{ devis }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Le projet, <b>{{ devis.projet }}</b> a été créé le <i>{{ devis.projet.createdAt | format_datetime(locale='fr') }}</i>, pour le client, <b>{{ devis.projet.client }}</b>
+            </h6>
+
+            <div class="row p-4">
+                <div class="col-2">
+                    <h5 class="text-center">Produits</h5>
+                    <hr>
+                    {% for produit in devis.projet.produits %}
+                        Produit : {{ produit }}, Gamme : {{ produit.gamme }}
+                    {% endfor %}
+                </div>
+                <div class="col-2">
+                    <h5 class="text-center">Modèles</h5>
+                    <hr>
+                    {% for modele in devis.projet.modeles %}
+                        Modèle : {{ modele }}, Modules : {% for module in modele.modules %}{{ module }}{% if not loop.last %}, {% endif %}{% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {{ form_start(form) }}
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="col-md-6">
+                    {{ form_row(form.etat) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.paiementEchelonne) }}
+                </div>
+            </div>
+            <div style="display: none">
+                {{ form_row(form.nom) }}
+                {{ form_row(form.projet) }}
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="price text-success"><h5 class="mt-4">{{ 125 | format_currency('EUR', locale='fr') }}</h5></div>
+                <button type="submit" class="btn btn-success">Modifier</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

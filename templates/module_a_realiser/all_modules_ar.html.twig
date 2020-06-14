@@ -24,7 +24,6 @@
                 <th>Mode de conception</th>
                 <th>Longueur</th>
                 <th>Largeur</th>
-                <th>Modèles</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -35,7 +34,6 @@
                     <td>{{ module.modeConception }}</td>
                     <td>{{ module.longueur }}&nbsp;</td>
                     <td>{{ module.largeur }}</td>
-                    <td>{% for modele in module.modele %}{{ modele.nom }}<br>{% endfor %}</td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ module.nom }}"

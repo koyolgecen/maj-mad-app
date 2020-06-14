@@ -26,6 +26,36 @@ class DevisController extends AbstractController
     }
 
     /**
+     * @param Devis $devis
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     *
+     * @Route("/devis/{id}", name="devis_item")
+     */
+    public function item(Devis $devis, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(DevisType::class, $devis);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->persist($devis);
+            $em->flush();
+
+            $this->addFlash('success', sprintf('Devis "%s" modifié avec succès !', $devis->getNom()));
+            return $this->redirectToRoute('devis_item', [
+                'id' => $devis->getId()
+            ]);
+        }
+
+        return $this->render('devis/item.html.twig', [
+            'devis' => $devis,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @param EntityManagerInterface $em
      *
@@ -50,34 +80,6 @@ class DevisController extends AbstractController
         }
 
         return $this->render('devis/add.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @param Devis $devis
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     *
-     * @return RedirectResponse|Response
-     *
-     * @Route("/devis/edit/{id}", name="devis_edit")
-     */
-    public function edit(Devis $devis, Request $request, EntityManagerInterface $em)
-    {
-        $form = $this->createForm(DevisType::class, $devis);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $em->persist($devis);
-            $em->flush();
-
-            $this->addFlash('success', sprintf('Devis "%s" modifié avec succès !', $devis->getNom()));
-            return $this->redirectToRoute('devis');
-        }
-
-        return $this->render('devis/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

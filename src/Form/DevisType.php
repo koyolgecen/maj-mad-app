@@ -51,6 +51,7 @@ class DevisType extends AbstractType
             ])
             ->add('paiementEchelonne', EntityType::class, [
                 'class' => PaiementEchelonne::class,
+                'label' => 'Paiement échelonné',
                 'placeholder' => 'Choisir',
                 'attr' => [
                     'class' => 'selectpicker show-tick',

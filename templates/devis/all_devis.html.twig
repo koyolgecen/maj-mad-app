@@ -30,16 +30,15 @@
             <tbody>
             {% for dev in devis %}
                 <tr>
-                    <td>{{ dev.nom }}</td>
+                    <td>
+                        <a href="{{ path('devis_item', {'id': dev.id}) }}">
+                            {{ dev.nom }}
+                        </a>
+                    </td>
                     <td>{{ dev.projet }}</td>
                     <td>{{ dev.etat }}</td>
                     <td>{{ dev.paiementEchelonne }}</td>
                     <td class="text-center">
-                        <a class="btn btn-warning btn-sm"
-                           data-toggle="tooltip" title="Modifier {{ dev.nom }}"
-                           href="{{ path('devis_edit', { 'id': dev.id }) }}">
-                            <i class="fas fa-edit fa-sm"></i>
-                        </a>
                         <a class="btn btn-danger btn-sm ml-1 confirm"
                            data-to-delete="{{ dev.nom }}"
                            data-toggle="tooltip" title="Supprimer {{ dev.nom }}"

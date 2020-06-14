@@ -43,7 +43,7 @@ class PaiementEchelonne
      */
     public function __toString(): string
     {
-        return $this->nomEtape;
+        return $this->nomEtape . ' - ' . $this->pourcentageAPayer * 100 . '%';
     }
 
     public function getId(): ?int
