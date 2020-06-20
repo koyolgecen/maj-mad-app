@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
  * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
  *
  * @UniqueEntity(fields={"login"})
  * @UniqueEntity(fields={"email"})

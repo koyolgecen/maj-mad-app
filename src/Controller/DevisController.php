@@ -5,15 +5,28 @@ namespace App\Controller;
 use App\Entity\Devis;
 use App\Form\DevisType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DevisController
+ * @package App\Controller
+ *
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
+ * @author Clément COURTET <clement.courtet@viacesi.fr>
+ * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
+ *
+*  @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")
+ */
 class DevisController extends AbstractController
 {
     /**
+     * Affichage des tous les devis en mode dataTable
+     *
      * @Route("/devis", name="devis")
      */
     public function devis()
@@ -26,6 +39,8 @@ class DevisController extends AbstractController
     }
 
     /**
+     * Affichage d'un devis, on pourrait modifier son état et son paiement également
+     *
      * @param Devis $devis
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -56,6 +71,8 @@ class DevisController extends AbstractController
     }
 
     /**
+     * Création d'un devis
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      *
@@ -85,6 +102,8 @@ class DevisController extends AbstractController
     }
 
     /**
+     * Suppression d'un devis
+     *
      * @param Devis $devis
      * @param EntityManagerInterface $em
      *
