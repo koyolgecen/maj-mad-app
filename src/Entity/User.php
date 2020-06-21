@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -75,6 +77,16 @@ class User implements UserInterface
      * @Assert\Length(max="255")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="vendeur")
+     */
+    private $devis;
+
+    public function __construct()
+    {
+        $this->devis = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -186,6 +198,37 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Devis[]
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis[] = $devi;
+            $devi->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->contains($devi)) {
+            $this->devis->removeElement($devi);
+            // set the owning side to null (unless already changed)
+            if ($devi->getVendeur() === $this) {
+                $devi->setVendeur(null);
+            }
+        }
 
         return $this;
     }

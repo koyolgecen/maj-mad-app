@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Devis;
+use App\Entity\User;
 use App\Form\DevisType;
+use App\Services\DevisService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +26,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DevisController extends AbstractController
 {
+    /** @var DevisService */
+    private $devisService;
+
+    /**
+     * DevisController constructor.
+     * @param DevisService $devisService
+     */
+    public function __construct(DevisService $devisService)
+    {
+        $this->devisService = $devisService;
+    }
+
     /**
      * Affichage des tous les devis en mode dataTable
      *
@@ -66,7 +80,10 @@ class DevisController extends AbstractController
 
         return $this->render('devis/item.html.twig', [
             'devis' => $devis,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'prixHTWithMarge' => $this->devisService->calculatePriceWithMargeHT($devis),
+            'prixTTCWithMarge' => $this->devisService->calculatePriceWithMargeTTC($devis),
+            'devisDetailled' => $this->devisService->getComposantsDetailled($devis)
         ]);
     }
 
@@ -88,6 +105,10 @@ class DevisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Devis $devis */
             $devis = $form->getData();
+
+            /** @var User $user */
+            $user = $this->getUser();
+            $devis->setVendeur($user);
 
             $em->persist($devis);
             $em->flush();

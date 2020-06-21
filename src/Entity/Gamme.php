@@ -183,6 +183,9 @@ class Gamme
         return $this;
     }
 
+    /**
+     * @return Modele|null
+     */
     public function getModele(): ?Modele
     {
         return $this->modele;

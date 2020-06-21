@@ -7,6 +7,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DevisRepository")
+ *
+ * @author Konuralp YOLGECEN <konuralp.yolgecen@viacesi.fr>
  */
 class Devis
 {
@@ -40,6 +42,12 @@ class Devis
      * @ORM\ManyToOne(targetEntity="App\Entity\PaiementEchelonne", inversedBy="devis")
      */
     private $paiementEchelonne;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="devis")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vendeur;
 
     /**
      * @return string
@@ -98,6 +106,72 @@ class Devis
     public function setPaiementEchelonne(?PaiementEchelonne $paiementEchelonne): self
     {
         $this->paiementEchelonne = $paiementEchelonne;
+
+        return $this;
+    }
+
+    /**
+     * @return array|Modele[]
+     */
+    public function getModeles(): array
+    {
+        $result = [];
+        foreach ($this->getProjet()->getProduits() as $produit) {
+            /** @var Gamme $gamme */
+            $gamme = $produit->getGamme();
+            /** @var Modele $modele */
+            $modele = $gamme->getModele();
+            $result[] = $modele;
+        }
+        return $result;
+    }
+
+
+    /**
+     * @return array|Module[]
+     */
+    public function getModules(): array
+    {
+        $result = [];
+        foreach ($this->getProjet()->getProduits() as $produit) {
+            /** @var Gamme $gamme */
+            $gamme = $produit->getGamme();
+            /** @var Modele $modele */
+            $modele = $gamme->getModele();
+            foreach ($modele->getModules() as $module) {
+                $result[] = $module;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @return array|Composant[]
+     */
+    public function getComposants(): array
+    {
+        $result = [];
+        $produits = $this->getProjet()->getProduits();
+        foreach ($produits as $produit) {
+            $gamme = $produit->getGamme();
+            $modele = $gamme->getModele();
+            foreach ($modele->getModules() as $module) {
+                foreach ($module->getModuleComposant() as $composant) {
+                    $result[] = $composant;
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function getVendeur(): ?User
+    {
+        return $this->vendeur;
+    }
+
+    public function setVendeur(?User $vendeur): self
+    {
+        $this->vendeur = $vendeur;
 
         return $this;
     }
