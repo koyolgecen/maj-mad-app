@@ -1,3 +1,5 @@
+{% trans_default_domain 'devis' %}
+
 <!DOCTYPE html>
     <html lang="fr">
     <head>
@@ -120,6 +122,29 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    <div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Etapes</th>
+                                <th scope="col" class="text-center">% de la somme à débloquer</th>
+                                <th scope="col" class="text-center">La somme à débloquer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, etape in constant("App\\Entity\\Devis::ETAPES") %}
+                                <tr>
+                                    <td>{{ key | trans }}</td>
+                                    <td class="text-center">{{ etape * 100 }} %</td>
+                                    <td class="text-center">
+                                        {{ (prixTTCWithMarge * etape) | format_currency('EUR', locale='fr') }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="card bg-light float-right mt-3" style="page-break-inside: avoid !important;">

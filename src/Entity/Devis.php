@@ -12,6 +12,26 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Devis
 {
+    public const ETAPE_SIGNATURE = 'signature';
+    public const ETAPE_PERMIS_DE_CONSTRUIRE = 'permis_de_construire';
+    public const ETAPE_OUVERTURE_CHANTIER = 'ouverture_chantier';
+    public const ETAPE_FONDATIONS = 'fondations';
+    public const ETAPE_MURS = 'murs';
+    public const ETAPE_HORS_EAU_HORS_AIR = 'hors_eau_hors_air';
+    public const ETAPE_TRAVAUX = 'travaux';
+    public const ETAPE_REMISE_CLE = 'remise_cle';
+
+    public const ETAPES = [
+        self::ETAPE_SIGNATURE => 0.03,
+        self::ETAPE_PERMIS_DE_CONSTRUIRE => 0.1,
+        self::ETAPE_OUVERTURE_CHANTIER => 0.15,
+        self::ETAPE_FONDATIONS => 0.25,
+        self::ETAPE_MURS => 0.4,
+        self::ETAPE_HORS_EAU_HORS_AIR => 0.75,
+        self::ETAPE_TRAVAUX => 0.95,
+        self::ETAPE_REMISE_CLE => 1,
+    ];
+
     use TimestampableEntity;
 
     /**
