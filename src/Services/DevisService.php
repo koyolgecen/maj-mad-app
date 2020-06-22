@@ -81,7 +81,7 @@ class DevisService
      * @param float $prix
      * @return float
      */
-    private function HTToTTC(float $prix): float
+    public function HTToTTC(float $prix): float
     {
         return (($prix * 20) / 100) + $prix;
     }
