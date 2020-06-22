@@ -177,12 +177,6 @@
                                     <i class="fas fa-step-forward"></i>&nbsp;<span>Etats devis</span>
                                 </a>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link {% if 'paiement' in app.request.get('_route') %}active{% endif %}"
-                                   href="{{ path('paiements_echelonnes') }}">
-                                    <i class="fas fa-euro-sign"></i>&nbsp;<span>Paiements échelonnés</span>
-                                </a>
-                            </li>
                         {% endif %}
 
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')%}

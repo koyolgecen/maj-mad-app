@@ -4,3 +4,7 @@ twig:
         'public/images': images
     form_themes:
         - 'bootstrap_4_layout.html.twig'
+    globals:
+        pathToCSS: "%kernel.project_dir%/public/css"
+        pathToImages: "%kernel.project_dir%/public/images"
+        pathToFonts: "%kernel.project_dir%/public/fonts"

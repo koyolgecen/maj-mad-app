@@ -6,30 +6,26 @@
 {% block title %}Devis {{ devis }}{% endblock %}
 
 {% block body %}
-    <div class="card">
-
-
-        <a href="{{ path('devis_generate_pdf', {'id': devis.id}) }}" class="btn btn-success">Imprimer</a>
+    <div class="card mb-5">
         <div class="p-5">
             <img class="card-img" src="{{ asset('images/maisons/' ~ random(1, 9) ~ '.jpg') }}" alt="maison">
         </div>
         <div class="card-body">
-            <h3 class="card-title text-dark">Devis - {{ devis }}  <span class="badge badge-primary ml-2">{{ devis.etat }}</span></h3>
+            <h3 class="card-title text-dark">Devis - {{ devis }}  <span class="badge badge-{{ devis.etat.badgeStyle }} ml-2">{{ devis.etat }}</span></h3>
             <h6 class="card-subtitle mb-2 mt-2 text-muted">
                 Le projet, <b>{{ devis.projet }}</b> a été créé le <i>{{ devis.projet.createdAt | format_datetime(locale='fr') }}</i> par <i>{{ devis.vendeur.nom | upper }} {{ devis.vendeur.prenom }}</i> , pour le client, <b>{{ devis.projet.client }}</b>
             </h6>
 
-            <h4 class="mt-4 text-dark text-center">Détailles du devis<hr></h4>
+            <h4 class="text-center text-dark mt-4">Produits</h4>
+            <hr>
+            {% for produit in devis.projet.produits %}
+                Produit : {{ produit }}, Gamme : {{ produit.gamme }}
+            {% endfor %}
 
+            <h4 class="mt-4 text-dark text-center">Détailles du devis</h4>
+            <hr>
             <div class="row p-4">
-                <div class="col-4">
-                    <h5 class="text-center">Produits</h5>
-                    <hr>
-                    {% for produit in devis.projet.produits %}
-                        Produit : {{ produit }}, Gamme : {{ produit.gamme }}
-                    {% endfor %}
-                </div>
-                <div class="col-8">
+                <div class="col-12">
                     <h5 class="text-center">Modèles</h5>
                     <hr>
                     {% for modele in devis.modeles %}
@@ -61,29 +57,34 @@
                             <hr>
                         {% endfor %}
                     {% endfor %}
-                    {% for modele in devis.projet.modeles %}
-                        Modèle : {{ modele }}, Modules : {% for module in modele.modules %}{{ module }}{% if not loop.last %}, {% endif %}{% endfor %}
-                    {% endfor %}
                 </div>
             </div>
 
             {{ form_start(form) }}
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="col-md-4">
                     {{ form_row(form.etat) }}
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.paiementEchelonne) }}
+                <div class="col-md-4">
+                    {{ form_row(form.projet) }}
                 </div>
             </div>
-            <div style="display: none">
-                {{ form_row(form.nom) }}
-                {{ form_row(form.projet) }}
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="price text-success"><h5 class="mt-4">{{ prixHTWithMarge | format_currency('EUR', locale='fr') }} HT</h5></div>
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <div class="price text-gray-700"><h5 class="mt-4">{{ prixHTWithMarge | format_currency('EUR', locale='fr') }} HT</h5></div>
+                <div class="price text-primary"><h5 class="mt-4">{{ (prixTTCWithMarge - prixHTWithMarge) | format_currency('EUR', locale='fr') }} - TVA (20%)</h5></div>
                 <div class="price text-success"><h5 class="mt-4">{{ prixTTCWithMarge | format_currency('EUR', locale='fr') }} TTC</h5></div>
-                <button type="submit" class="btn btn-success">Modifier</button>
+                <a href="{{ path('devis_generate_pdf', {'id': devis.id}) }}" class="btn btn-outline-primary">
+                    <i class="fas fa-file-pdf"></i><span class="ml-2">Générer PDF</span>
+                </a>
+                {% if devis.etat.commendable %}
+                    <a href="" class="btn btn-outline-success">
+                        <i class="fas fa-shopping-bag"></i><span class="ml-2">Commander</span>
+                    </a>
+                {% endif %}
+                <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i><span class="ml-2">Modifier</span></button>
             </div>
             {{ form_end(form) }}
         </div>

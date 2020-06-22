@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Form\DevisType;
 use App\Services\DevisService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,14 +30,17 @@ class DevisController extends AbstractController
 {
     /** @var DevisService */
     private $devisService;
+    /** @var Pdf */
+    private $pdfGenerator;
 
     /**
      * DevisController constructor.
      * @param DevisService $devisService
      */
-    public function __construct(DevisService $devisService)
+    public function __construct(DevisService $devisService, Pdf $pdfGenerator)
     {
         $this->devisService = $devisService;
+        $this->pdfGenerator = $pdfGenerator;
     }
 
     /**
@@ -50,6 +55,27 @@ class DevisController extends AbstractController
         return $this->render('devis/all_devis.html.twig', [
             'devis' => $devis
         ]);
+    }
+
+    /**
+     * @param Devis $devis
+     * @return PdfResponse
+     *
+     * @Route("/devis-generate-pdf/{id}", name="devis_generate_pdf")
+     */
+    public function generatePdf(Devis $devis)
+    {
+        $html = $this->renderView('devis/pdf.html.twig', [
+            'devis'  => $devis,
+            'devisDetailled' => $this->devisService->getComposantsDetailled($devis),
+            'prixHTWithMarge' => $this->devisService->calculatePriceWithMargeHT($devis),
+            'prixTTCWithMarge' => $this->devisService->calculatePriceWithMargeTTC($devis)
+        ]);
+
+        return new PdfResponse(
+            $this->pdfGenerator->getOutputFromHtml($html),
+            sprintf('%s-%s.pdf', $devis, date('d-m-y'))
+        );
     }
 
     /**

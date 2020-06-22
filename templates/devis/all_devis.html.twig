@@ -23,7 +23,7 @@
                 <th>Nom</th>
                 <th>Projet</th>
                 <th>Etat</th>
-                <th>Paiement échelonné</th>
+                <th>Vendeur(se)</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -37,7 +37,7 @@
                     </td>
                     <td>{{ dev.projet }}</td>
                     <td>{{ dev.etat }}</td>
-                    <td>{{ dev.paiementEchelonne }}</td>
+                    <td>{{ dev.vendeur.nom | upper }} {{ dev.vendeur.prenom }}</td>
                     <td class="text-center">
                         <a class="btn btn-danger btn-sm ml-1 confirm"
                            data-to-delete="{{ dev.nom }}"

@@ -39,11 +39,6 @@ class Devis
     private $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PaiementEchelonne", inversedBy="devis")
-     */
-    private $paiementEchelonne;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="devis")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -94,18 +89,6 @@ class Devis
     public function setEtat(?EtatDevis $etat): self
     {
         $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getPaiementEchelonne(): ?PaiementEchelonne
-    {
-        return $this->paiementEchelonne;
-    }
-
-    public function setPaiementEchelonne(?PaiementEchelonne $paiementEchelonne): self
-    {
-        $this->paiementEchelonne = $paiementEchelonne;
 
         return $this;
     }

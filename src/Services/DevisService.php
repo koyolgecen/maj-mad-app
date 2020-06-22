@@ -21,10 +21,12 @@ class DevisService
         $result = [];
         foreach ($devis->getModules() as $module) {
             foreach ($module->getModuleComposant() as $key => $composant) {
+                $prixWithMargeEnt = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeEntreprise());
+                $prixWithMargeCom = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeCommerciale());
                 $result[$module->getNom()][$key] = [
                     'composant' => $composant->getNature(),
-                    'prixHT' => $composant->getPrix(),
-                    'prixTTC' => $this->HTToTTC($composant->getPrix()),
+                    'prixHT' => $prixWithMargeEnt + $prixWithMargeCom,
+                    'prixTTC' => $this->HTToTTC($prixWithMargeEnt + $prixWithMargeCom),
                     'fournisseurs' => $composant->getFournisseurs()
                 ];
             }

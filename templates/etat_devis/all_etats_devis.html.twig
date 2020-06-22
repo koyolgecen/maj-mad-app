@@ -21,6 +21,8 @@
             <thead>
             <tr>
                 <th>Nom</th>
+                <th class="text-center">Commendable</th>
+                <th class="text-center">Style du badge</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -28,6 +30,8 @@
             {% for etat in etatsdevis %}
                 <tr>
                     <td>{{ etat.nom }}</td>
+                    <td class="text-center">{{ etat.commendable ? 'Oui' : 'Non' }}</td>
+                    <td class="text-center"><span class="badge badge-{{ etat.badgeStyle }}">{{ etat.badgeStyle }}</span></td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm"
                            data-toggle="tooltip" title="Modifier {{ etat.nom }}"

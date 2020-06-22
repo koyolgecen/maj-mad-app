@@ -11,6 +11,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EtatDevis
 {
+    public const BADGE_PRIMARY = 'primary';
+    public const BADGE_SECONDARY = 'secondary';
+    public const BADGE_SUCCESS = 'success';
+    public const BADGE_DANGER = 'danger';
+    public const BADGE_WARNING = 'warning';
+    public const BADGE_INFO = 'info';
+    public const BADGE_LIGHT = 'light';
+    public const BADGE_DARK = 'dark';
+
+    public const BADGES = [
+        self::BADGE_PRIMARY => self::BADGE_PRIMARY,
+        self::BADGE_SECONDARY => self::BADGE_SECONDARY,
+        self::BADGE_SUCCESS => self::BADGE_SUCCESS,
+        self::BADGE_DANGER => self::BADGE_DANGER,
+        self::BADGE_WARNING => self::BADGE_WARNING,
+        self::BADGE_INFO => self::BADGE_INFO,
+        self::BADGE_LIGHT => self::BADGE_LIGHT,
+        self::BADGE_DARK => self::BADGE_DARK
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -27,6 +47,16 @@ class EtatDevis
      * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="etat")
      */
     private $devis;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $commendable = false;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $badgeStyle = self::BADGE_SECONDARY;
 
     public function __construct()
     {
@@ -85,6 +115,30 @@ class EtatDevis
                 $devi->setEtat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isCommendable(): ?bool
+    {
+        return $this->commendable;
+    }
+
+    public function setCommendable(bool $commendable): self
+    {
+        $this->commendable = $commendable;
+
+        return $this;
+    }
+
+    public function getBadgeStyle(): ?string
+    {
+        return $this->badgeStyle;
+    }
+
+    public function setBadgeStyle(string $badgeStyle): self
+    {
+        $this->badgeStyle = $badgeStyle;
 
         return $this;
     }

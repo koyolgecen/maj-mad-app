@@ -1,1 +1,147 @@
-{{ devis }}
+<!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ devis }}</title>
+        <link rel="stylesheet" href="{{ pathToCSS }}/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ pathToFonts }}/fontawesome-all.min.css">
+        <style>
+            table, tr, td, th, tbody, thead, tfoot {
+                page-break-inside: avoid !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" style = "display:block; clear:both; page-break-after:always;">
+            <div class="card">
+                <div class="card-header">
+                    <span class="text-center text-dark">Devis - {{ devis }} crée le {{ devis.createdAt | format_datetime('medium', 'none', locale='fr') }} par <i>{{ devis.vendeur.nom | upper }} {{ devis.vendeur.prenom }}</i></span>
+                    <span class="float-right"> <strong>Statut:</strong> <span class="badge badge-{{ devis.etat.badgeStyle }}  ml-2">{{ devis.etat }}</span></span>
+                </div>
+                <div class="card-body">
+
+                    <div class="row mb-5">
+                        <div class="col-6 text-center">
+                            <img src="{{ pathToImages }}/logo.ico" alt="icon-madera">
+                        </div>
+                        <div class="col-6 mt-3 text-center">
+                            <h1 class="text-primary">Devis - {{ devis }} </h1>
+                            <h4 class="text-dark">Projet - {{ devis.projet }}</h4>
+                            <div class="mt-3">
+                                <strong><i class="fas fa-industry"></i><span class="ml-2">MADERA</span></strong>
+                            </div>
+                            <div class="mt-2"><i class="fas fa-map-pin"></i> <span class="ml-2">Lille, Annecy, Dax</span></div>
+                            <div class="mt-2"><i class="fas fa-envelope"></i> <span class="ml-2">info@madera.fr</span></div>
+                            <div class="mt-2"><i class="fas fa-phone"></i> <span class="ml-2">+33 00 00 00 00</span></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-5 mt-5">
+                        <div class="col-6 text-center">
+                            <div>
+                                <i class="fas fa-user"></i> <span class="ml-2">Vendeur(se) :</span>
+                                <strong>{{ devis.vendeur.nom | upper}} {{ devis.vendeur.prenom }}</strong>
+                            </div>
+                            <div class="mt-2"><i class="fas fa-map-pin"></i> <span class="ml-2">Lille, Annecy, Dax</span></div>
+                            <div class="mt-2"><i class="fas fa-envelope"></i> <span class="ml-2">{{ devis.vendeur.email }}</span></div>
+                        </div>
+
+                        <div class="col-6 text-center">
+                            <div>
+                                <strong><i class="fas fa-address-book"></i>
+                                    <span class="ml-2">{{ devis.projet.client.nom | upper }} {{ devis.projet.client.prenom }}</span>
+                                </strong>
+                            </div>
+                            <div class="mt-2"><i class="fas fa-map-pin"></i> <span class="ml-2">{{ devis.projet.client.adresse }}</span></div>
+                            <div class="mt-2"> <span class="ml-2">{{ devis.projet.client.ville }} - {{ devis.projet.client.codePostale }}</span></div>
+                            <div class="mt-2"><i class="fas fa-envelope"></i> <span class="ml-2">{{ devis.projet.client.mail }}</span></div>
+                            <div class="mt-2"><i class="fas fa-phone"></i> <span class="ml-2">{{ devis.projet.client.telephone }}</span></div>
+                        </div>
+                    </div>
+
+                    <h5 class="text-center mt-5">Modèles</h5>
+                    <hr>
+                    {% for modele in devis.modeles %}
+                        <h5 class="text-dark text-center">Modèle - {{ modele }}</h5>
+                        {% for module in modele.modules %}
+                            <p><b>{{ loop.index }}.</b> Module - {{ module }}</p>
+                            <div class="table-responsive-lg">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Composant</th>
+                                        <th scope="col">Prix HT</th>
+                                        <th scope="col">Prix TTC (20%)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for composant in devisDetailled[module.nom] %}
+                                        <tr>
+                                            <td>{{ composant.composant  }}</td>
+                                            <td>{{ composant.prixHT | format_currency('EUR', locale='fr') }}</td>
+                                            <td>{{ composant.prixTTC | format_currency('EUR', locale='fr') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    {% endfor %}
+
+                    <div class="row mt-5">
+                        <div class="col-lg-4 col-sm-5">
+
+                        </div>
+
+                        <div class="col-lg-4 col-sm-5 ml-auto">
+                            <table class="table table-clear">
+                                <tbody>
+                                <tr>
+                                    <td class="left">
+                                        <strong>Montant total HT</strong>
+                                    </td>
+                                    <td class="right text-gray-700">{{ prixHTWithMarge | format_currency('EUR', locale='fr') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="left">
+                                        <strong>TVA (20%)</strong>
+                                    </td>
+                                    <td class="right text-primary">{{ (prixTTCWithMarge - prixHTWithMarge) | format_currency('EUR', locale='fr') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="left">
+                                        <strong>Montant total TTC</strong>
+                                    </td>
+                                    <td class="right text-success">
+                                        <strong>{{ prixTTCWithMarge | format_currency('EUR', locale='fr') }}</strong>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light float-right mt-3" style="page-break-inside: avoid !important;">
+                        <div class="card-body">
+                            Signature du client (précédée de la mention "Bon pour accord")
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white" style="position: fixed; bottom: 0;">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright">
+                    <span>Copyright © MADERA {{ "now" | date("Y") }}</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
