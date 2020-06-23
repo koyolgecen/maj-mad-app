@@ -65,6 +65,11 @@ class Devis
     private $vendeur;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Commande", cascade={"persist", "remove"})
+     */
+    private $commande;
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -175,6 +180,18 @@ class Devis
     public function setVendeur(?User $vendeur): self
     {
         $this->vendeur = $vendeur;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
 
         return $this;
     }

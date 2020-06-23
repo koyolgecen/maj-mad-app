@@ -107,9 +107,16 @@
                 <a href="{{ path('devis_generate_pdf', {'id': devis.id}) }}" class="btn btn-outline-primary">
                     <i class="fas fa-file-pdf"></i><span class="ml-2">Générer PDF</span>
                 </a>
-                {% if devis.etat.commendable %}
-                    <a href="" class="btn btn-outline-success">
+                {% if devis.etat.commendable and devis.commande is null %}
+                    <a href="{{ path('commande_devis', {'id': devis.id}) }}" class="btn btn-outline-success confirm"
+                       data-to-commande="{{ devis }}">
                         <i class="fas fa-shopping-bag"></i><span class="ml-2">Commander</span>
+                    </a>
+                {% endif %}
+                {% if devis.commande is not null %}
+                    <a href="{{ path('commande_to_cancel', {'id': devis.id}) }}" class="btn btn-outline-danger annule"
+                       data-to-commande="{{ devis }}">
+                        <i class="fas fa-times-circle"></i><span class="ml-2">Annuler la commande</span>
                     </a>
                 {% endif %}
                 <button type="submit" class="btn btn-success">
@@ -119,5 +126,43 @@
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.confirm').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Etes vous sûr de commander le devis - " + $(this).data('to-commande') + " ?",
+                text: 'Vous pouvez annuler la commande à tout moment avant qu\'elle soit livrée !',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Oui, commander',
+                cancelButtonText: 'Non'
+            }).then((result) => {
+                if (result.value) {
+                    document.location.href = $(this).attr('href');
+                }
+            });
+        });
+        $('.annule').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Etes vous sûr de annuler la commande pour le devis - " + $(this).data('to-commande') + " ?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Oui, annuler la commande',
+                cancelButtonText: 'Non'
+            }).then((result) => {
+                if (result.value) {
+                    document.location.href = $(this).attr('href');
+                }
+            });
+        });
+    </script>
 {% endblock %}
 

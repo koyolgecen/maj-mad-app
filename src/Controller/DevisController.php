@@ -36,6 +36,7 @@ class DevisController extends AbstractController
     /**
      * DevisController constructor.
      * @param DevisService $devisService
+     * @param Pdf $pdfGenerator
      */
     public function __construct(DevisService $devisService, Pdf $pdfGenerator)
     {
@@ -79,7 +80,7 @@ class DevisController extends AbstractController
     }
 
     /**
-     * Affichage d'un devis, on pourrait modifier son état et son paiement également
+     * Affichage d'un devis et la modification
      *
      * @param Devis $devis
      * @param Request $request

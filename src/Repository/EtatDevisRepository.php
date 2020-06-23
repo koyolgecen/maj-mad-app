@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\EtatDevis;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * @method EtatDevis|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,15 +37,21 @@ class EtatDevisRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?EtatDevis
+
+    /**
+     * Permet de trouver un etat devis par son nom
+     *
+     * @param string $value
+     * @return EtatDevis|null
+     * @throws NonUniqueResultException
+     */
+    public function findOneByNom(string $value): ?EtatDevis
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('e.nom LIKE :val')
+            ->setParameter('val','%' . $value . '%')
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
