@@ -12,6 +12,40 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Devis
 {
+    public const ETAT_BROUILLON = 'BROUILLON';
+    public const ETAT_ACCEPTE = 'ACCEPTE';
+    public const ETAT_EN_ATTENTE = 'EN_ATTENTE';
+    public const ETAT_REFUSE = 'REFUSE';
+    public const ETAT_EN_COMMANDE = 'EN_COMMANDE';
+    public const ETAT_TRANSFERT_EN_FACTURATION = 'TRANSFERT_EN_FACTURATION';
+
+    public const ETATS = [
+      self::ETAT_BROUILLON,
+      self::ETAT_ACCEPTE,
+      self::ETAT_EN_ATTENTE,
+      self::ETAT_REFUSE,
+      self::ETAT_EN_COMMANDE,
+      self::ETAT_TRANSFERT_EN_FACTURATION
+    ];
+
+    public const BADGE_PRIMARY = 'primary';
+    public const BADGE_SECONDARY = 'secondary';
+    public const BADGE_SUCCESS = 'success';
+    public const BADGE_DANGER = 'danger';
+    public const BADGE_WARNING = 'warning';
+    public const BADGE_INFO = 'info';
+    public const BADGE_LIGHT = 'light';
+    public const BADGE_DARK = 'dark';
+
+    public const BADGES = [
+        self::ETAT_BROUILLON => self::BADGE_SECONDARY,
+        self::ETAT_EN_COMMANDE => self::BADGE_PRIMARY,
+        self::ETAT_ACCEPTE => self::BADGE_SUCCESS,
+        self::ETAT_REFUSE => self::BADGE_DANGER,
+        self::ETAT_EN_ATTENTE => self::BADGE_WARNING,
+        self::ETAT_TRANSFERT_EN_FACTURATION => self::BADGE_INFO
+    ];
+
     public const ETAPE_SIGNATURE = 'signature';
     public const ETAPE_PERMIS_DE_CONSTRUIRE = 'permis_de_construire';
     public const ETAPE_OUVERTURE_CHANTIER = 'ouverture_chantier';
@@ -53,10 +87,9 @@ class Devis
     private $projet;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EtatDevis", inversedBy="devis")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $etat;
+    private $etat = self::ETAT_BROUILLON;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="devis")
@@ -106,12 +139,12 @@ class Devis
         return $this;
     }
 
-    public function getEtat(): ?EtatDevis
+    public function getEtat(): ?string
     {
         return $this->etat;
     }
 
-    public function setEtat(?EtatDevis $etat): self
+    public function setEtat(?string $etat): self
     {
         $this->etat = $etat;
 

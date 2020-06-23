@@ -6,3 +6,10 @@ murs: Achèvement des murs
 hors_eau_hors_air: Mise hors d’eau/hors d’air
 travaux: Achèvement des travaux d’équipement (plomberie, menuiserie, chauffage)
 remise_cle: Remise des clés
+etat:
+  brouillon: Brouillon
+  accepte: Accepté
+  en_attente: En attente
+  refuse: Refusé
+  en_commande: En commande
+  transfert_en_facturation: Transfert en facturation

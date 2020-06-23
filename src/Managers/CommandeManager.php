@@ -41,8 +41,6 @@ class CommandeManager
      */
     public function order(Devis $devis, User $user): void
     {
-        $etatDevisRepo = $this->em->getRepository(EtatDevis::class);
-
         $prixTTC = $this->devisService->calculatePriceWithMargeTTC($devis);
 
         $commande = new Commande();
@@ -51,11 +49,7 @@ class CommandeManager
         $this->em->persist($commande);
         $this->em->flush();
 
-        /** @var EtatDevis|null $etatDevis */
-        $etatDevis = $etatDevisRepo->findOneByNom('commande');
-        if (!is_null($etatDevis)) {
-            $devis->setEtat($etatDevis);
-        }
+        $devis->setEtat(Devis::ETAT_EN_COMMANDE);
         $devis->setCommande($commande);
         foreach ($devis->getComposants() as $composant) {
             $composant->setQuantite(($composant->getQuantite() - 1));
@@ -87,6 +81,7 @@ class CommandeManager
         }
         $this->em->remove($devis->getCommande());
         $devis->setCommande(null);
+        $devis->setEtat(Devis::ETAT_ACCEPTE);
         $this->em->flush();
     }
 

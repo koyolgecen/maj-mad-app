@@ -1,5 +1,7 @@
 {% extends 'base_datatable.html.twig' %}
 
+{% trans_default_domain 'devis' %}
+
 {% set icon = 'fa-marker' %}
 {% set iconLabel = 'Devis' %}
 
@@ -36,7 +38,11 @@
                         </a>
                     </td>
                     <td>{{ dev.projet }}</td>
-                    <td>{{ dev.etat }}</td>
+                    <td>
+                        <span class="badge badge-{{ constant("App\\Entity\\Devis::BADGES")[dev.etat] }} ml-2">
+                            {{ ('etat.' ~ (dev.etat | lower)) | trans }}
+                        </span>
+                    </td>
                     <td>{{ dev.vendeur.nom | upper }} {{ dev.vendeur.prenom }}</td>
                     <td class="text-center">
                         <a class="btn btn-danger btn-sm ml-1 confirm"

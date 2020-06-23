@@ -75,7 +75,7 @@ class DevisController extends AbstractController
 
         return new PdfResponse(
             $this->pdfGenerator->getOutputFromHtml($html),
-            sprintf('%s-%s.pdf', $devis, date('d-m-y'))
+            sprintf('devis_%s.pdf', date('dmyHi'))
         );
     }
 
