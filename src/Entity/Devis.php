@@ -99,6 +99,7 @@ class Devis
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Commande", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $commande;
 

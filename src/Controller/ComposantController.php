@@ -51,7 +51,7 @@ class ComposantController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var FournisseurType $fournisseur */
+            /** @var Composant $composant */
             $composant = $form->getData();
 
             $em->persist($composant);

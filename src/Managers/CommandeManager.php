@@ -45,6 +45,7 @@ class CommandeManager
         $commande = new Commande();
         $commande->setMontant($prixTTC);
         $commande->setVendeur($user);
+        $commande->setDevis($devis);
         $this->em->persist($commande);
         $this->em->flush();
 

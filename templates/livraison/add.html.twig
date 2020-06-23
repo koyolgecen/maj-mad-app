@@ -1,0 +1,11 @@
+{% extends 'base_form.html.twig' %}
+
+{% set icon = 'fa-truck' %}
+{% set iconLabel = 'Livraisons' %}
+
+{% set title = 'Ajouter une livraison' %}
+{% set h1 = 'Création d\'une livraison pour le devis - ' ~ devis %}
+
+{% block form %}
+    {{ form_widget(form) }}
+{% endblock %}

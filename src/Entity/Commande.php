@@ -32,6 +32,20 @@ class Commande
      */
     private $montant;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Livraison", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $livraison;
+
+    /**
+     * @var Devis|null
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Devis", inversedBy="commande")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $devis;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,5 +73,33 @@ class Commande
         $this->montant = $montant;
 
         return $this;
+    }
+
+    public function getLivraison(): ?Livraison
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(?Livraison $livraison): self
+    {
+        $this->livraison = $livraison;
+
+        return $this;
+    }
+
+    /**
+     * @return Devis|null
+     */
+    public function getDevis(): ?Devis
+    {
+        return $this->devis;
+    }
+
+    /**
+     * @param Devis|null $devis
+     */
+    public function setDevis(?Devis $devis): void
+    {
+        $this->devis = $devis;
     }
 }
