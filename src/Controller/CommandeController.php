@@ -6,7 +6,11 @@ use App\Entity\Devis;
 use App\Entity\User;
 use App\Managers\CommandeManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -32,11 +36,12 @@ class CommandeController extends AbstractController
 
     /**
      * @param Devis $devis
+     * @param MailerInterface $mailer
      * @return RedirectResponse
      *
      * @Route("/commande/{id}", name="commande_devis")
      */
-    public function orderAction(Devis $devis)
+    public function orderAction(Devis $devis, MailerInterface $mailer)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -44,7 +49,23 @@ class CommandeController extends AbstractController
         $this->commandeManager->order($devis, $user);
 
         $fournisseursToContact = $this->commandeManager->fournisseursToContact($devis);
-        dump($fournisseursToContact);
+        if (count($fournisseursToContact)) {
+            foreach ($fournisseursToContact as $fournisseur => $composant) {
+                $email = (new TemplatedEmail())
+                    ->from(new Address('fournisseur-contact@madera.fr', 'MADERA'))
+                    ->to(new Address($fournisseur, $composant['fournisseur']))
+                    ->subject('Nouvelle commande pour MADERA')
+                    ->htmlTemplate('email/fournisseur_commande.html.twig')
+                    ->context([
+                        'composant' => $composant['composant'],
+                        'fournisseur' => $composant['fournisseur']
+                    ]);
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                }
+            }
+        }
 
         $this->addFlash('success', sprintf('Devis - %s commandé avec succès !', $devis));
         return $this->redirectToRoute('devis_item', [

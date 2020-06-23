@@ -5,7 +5,6 @@ namespace App\Managers;
 
 use App\Entity\Commande;
 use App\Entity\Devis;
-use App\Entity\EtatDevis;
 use App\Entity\User;
 use App\Services\DevisService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,7 +66,10 @@ class CommandeManager
         foreach ($devis->getComposants() as $composant) {
             if ($composant->getQuantite() <= 5) {
                 foreach ($composant->getFournisseurs() as $fournisseur) {
-                    $result[$fournisseur->getMail()] = $composant->getNature();
+                    $result[$fournisseur->getMail()] = [
+                        'fournisseur' => $fournisseur->getNom(),
+                        'composant' => $composant->getNature()
+                    ];
                 }
             }
         }
