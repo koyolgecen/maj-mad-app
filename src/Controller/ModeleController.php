@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ModeleController
  * @package App\Controller
  *
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE')")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUREAU_DETUDE') or is_granted('ROLE_COMMERCIAL')")
  */
 class ModeleController extends AbstractController
 {
