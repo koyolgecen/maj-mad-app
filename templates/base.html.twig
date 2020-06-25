@@ -390,7 +390,7 @@
                         {% for label, messages in app.flashes %}
                             {% for message in messages %}
                                 <div aria-live="polite" aria-atomic="true">
-                                    <div class="toast" style="position: absolute; top: 0; right: 0;"
+                                    <div class="toast" style="position: absolute; top: 0; right: 0;z-index:1;"
                                          data-delay="5000" data-animation="true">
                                         {# use https://getbootstrap.com/docs/4.0/utilities/colors/#background-color for label #}
                                         <div class="toast-header bg-{{ label }} text-white">

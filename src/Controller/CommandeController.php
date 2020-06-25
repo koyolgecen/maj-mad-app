@@ -46,28 +46,31 @@ class CommandeController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $this->commandeManager->order($devis, $user);
+        $erreur = $this->commandeManager->order($devis, $user);
 
-        $fournisseursToContact = $this->commandeManager->fournisseursToContact($devis);
-        if (count($fournisseursToContact)) {
-            foreach ($fournisseursToContact as $fournisseur => $composant) {
-                $email = (new TemplatedEmail())
-                    ->from(new Address('fournisseur-contact@madera.fr', 'MADERA'))
-                    ->to(new Address($fournisseur, $composant['fournisseur']))
-                    ->subject('Nouvelle commande pour MADERA')
-                    ->htmlTemplate('email/fournisseur_commande.html.twig')
-                    ->context([
-                        'composant' => $composant['composant'],
-                        'fournisseur' => $composant['fournisseur']
-                    ]);
-                try {
-                    $mailer->send($email);
-                } catch (TransportExceptionInterface $e) {
+        if (empty($erreur)) {
+            $fournisseursToContact = $this->commandeManager->fournisseursToContact($devis);
+            if (count($fournisseursToContact)) {
+                foreach ($fournisseursToContact as $fournisseur => $composant) {
+                    $email = (new TemplatedEmail())
+                        ->from(new Address('fournisseur-contact@madera.fr', 'MADERA'))
+                        ->to(new Address($fournisseur, $composant['fournisseur']))
+                        ->subject('Nouvelle commande pour MADERA')
+                        ->htmlTemplate('email/fournisseur_commande.html.twig')
+                        ->context([
+                            'composant' => $composant['composant'],
+                            'fournisseur' => $composant['fournisseur']
+                        ]);
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                    }
                 }
             }
+            $this->addFlash('success', sprintf('Devis - %s commandé avec succès !', $devis));
+        } elseif (!empty($erreur)) {
+            $this->addFlash('danger', sprintf('%s', implode(',', $erreur)));
         }
-
-        $this->addFlash('success', sprintf('Devis - %s commandé avec succès !', $devis));
         return $this->redirectToRoute('devis_item', [
             'id' => $devis->getId()
         ]);

@@ -37,24 +37,34 @@ class CommandeManager
     /**
      * @param Devis $devis
      * @param User $user
+     * @return array
      */
-    public function order(Devis $devis, User $user): void
+    public function order(Devis $devis, User $user): array
     {
-        $prixTTC = $this->devisService->calculatePriceWithMargeTTC($devis);
-
-        $commande = new Commande();
-        $commande->setMontant($prixTTC);
-        $commande->setVendeur($user);
-        $commande->setDevis($devis);
-        $this->em->persist($commande);
-        $this->em->flush();
-
-        $devis->setEtat(Devis::ETAT_EN_COMMANDE);
-        $devis->setCommande($commande);
+        $erreur = [];
         foreach ($devis->getComposants() as $composant) {
-            $composant->setQuantite(($composant->getQuantite() - 1));
+            if ($composant->getQuantite() === 0 or $composant->getQuantite() < 0) {
+                $erreur[] = sprintf('Le composant %s est manquant dans le stock la commande n\'est pas pu passée.', $composant);
+            }
         }
-        $this->em->flush();
+        if (empty($erreur)) {
+            $prixTTC = $this->devisService->calculatePriceWithMargeTTC($devis);
+
+            $commande = new Commande();
+            $commande->setMontant($prixTTC);
+            $commande->setVendeur($user);
+            $commande->setDevis($devis);
+            $this->em->persist($commande);
+            $this->em->flush();
+
+            $devis->setEtat(Devis::ETAT_EN_COMMANDE);
+            $devis->setCommande($commande);
+            foreach ($devis->getComposants() as $composant) {
+                $composant->setQuantite(($composant->getQuantite() - 1));
+            }
+            $this->em->flush();
+        }
+        return $erreur;
     }
 
     /**

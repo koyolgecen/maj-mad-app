@@ -54,9 +54,10 @@
                                     <tr>
                                         <th scope="col">Quantité</th>
                                         <th scope="col">Composant</th>
+                                        <th scope="col">CCTP</th>
+                                        <th scope="col">Fournisseurs</th>
                                         <th scope="col">Prix HT</th>
                                         <th scope="col">Prix TTC (20%)</th>
-                                        <th scope="col">Fournisseurs</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -64,9 +65,10 @@
                                         <tr>
                                             <td>{{ composant.quantite  }}</td>
                                             <td>{{ composant.composant  }}</td>
+                                            <td>{{ composant.cctp }}</td>
+                                            <td>{% for fournisseur in composant.fournisseurs %} {{ fournisseur}} <br>{% endfor %}</td>
                                             <td>{{ composant.prixHT | format_currency('EUR', locale='fr') }}</td>
                                             <td>{{ composant.prixTTC | format_currency('EUR', locale='fr') }}</td>
-                                            <td>{% for fournisseur in composant.fournisseurs %} {{ fournisseur}} <br>{% endfor %}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

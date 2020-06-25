@@ -28,6 +28,7 @@ class DevisService
                     'prixHT' => $prixWithMargeEnt + $prixWithMargeCom,
                     'quantite' => $module->getQuantite(),
                     'prixTTC' => $this->HTToTTC($prixWithMargeEnt + $prixWithMargeCom),
+                    'cctp' => $module->getCctp(),
                     'fournisseurs' => $composant->getFournisseurs()
                 ];
             }
