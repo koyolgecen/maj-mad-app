@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ModuleARealiser;
+use App\Entity\Projet;
 use App\Form\ModuleARealiserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -21,14 +22,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModuleARealiserController extends AbstractController
 {
     /**
-     * @Route("/modules-ar", name="modules_ar")
+     * @param Projet $projet
+     * @param EntityManagerInterface $em
+     * @return Response
+     *
+     * @Route("/modules-ar/{id}", name="modules_ar")
      */
-    public function modules()
+    public function modules(Projet $projet, EntityManagerInterface $em)
     {
+        $moduleARealiserRepo = $em->getRepository(ModuleARealiser::class);
         /** @var ModuleARealiser[] $modules */
-        $modules = $this->getDoctrine()->getRepository( ModuleARealiser::class)->findAll();
+        $modules = $moduleARealiserRepo->findBy(['projetId' => $projet->getId()]);
 
         return $this->render('module_a_realiser/all_modules_ar.html.twig', [
+            'projet' => $projet,
             'modules' => $modules
         ]);
     }
@@ -64,15 +71,15 @@ class ModuleARealiserController extends AbstractController
 
     /**
      * @param ModuleARealiser $module
+     * @param int $projetId
      * @param Request $request
      * @param EntityManagerInterface $em
      *
      * @return RedirectResponse|Response
      *
-     * @Route("/module-ar/edit/{id}", name="module_ar_edit")
-     *
+     * @Route("/module-ar/edit/{id}/{projetId}", name="module_ar_edit")
      */
-    public function edit(ModuleARealiser $module, Request $request, EntityManagerInterface $em)
+    public function edit(ModuleARealiser $module, int $projetId, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(ModuleARealiserType::class, $module);
 
@@ -83,7 +90,9 @@ class ModuleARealiserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf('Module "%s" modifié avec succès !', $module->getNom()));
-            return $this->redirectToRoute('modules_ar');
+            return $this->redirectToRoute('modules_ar', [
+                'id' => $projetId
+            ]);
         }
 
         return $this->render('module_a_realiser/edit.html.twig', [

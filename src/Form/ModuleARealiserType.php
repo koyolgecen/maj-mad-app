@@ -29,11 +29,6 @@ class ModuleARealiserType extends AbstractType
                     'placeholder' => 'Saisir'
                 ]
             ])
-            ->add('modeConception', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'Saisir'
-                ]
-            ])
             ->add('longueur', NumberType::class, $attr)
             ->add('largeur', NumberType::class, $attr)
         ;

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ projet }}</title>
+        <link rel="stylesheet" href="{{ pathToCSS }}/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ pathToFonts }}/fontawesome-all.min.css">
+        <style>
+            table, tr, td, th, tbody, thead, tfoot {
+                page-break-inside: avoid !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" style = "display:block; clear:both; page-break-after:always;">
+            <div class="card">
+                <div class="card-header">
+                    <span class="text-center text-dark">Projet - {{ projet }} crée le {{ projet.createdAt | format_datetime('medium', 'none', locale='fr') }}.</span>
+                </div>
+                <div class="card-body">
+
+                    <div class="row mb-5">
+                        <div class="col-6 text-center">
+                            <img src="{{ pathToImages }}/logo.ico" alt="icon-madera">
+                        </div>
+                        <div class="col-6 mt-3 text-center">
+                            <h1 class="text-primary">Projet - {{ projet }} </h1>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <h5 class="text-center mt-5">Produits</h5>
+                    <hr>
+                    {% for produit in projet.produits %}
+                        <h5 class="text-dark text-center">Produit - {{ produit }}</h5>
+                        {% for module in produit.gamme.modele.modules %}
+                            <p><b>{{ loop.index }}.</b> Module - {{ module }}</p>
+                            <div class="table-responsive-lg">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Quantité</th>
+                                        <th scope="col">Composant</th>
+                                        <th scope="col">Prix HT</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for composant in projetDetailled[module.nom] %}
+                                        <tr>
+                                            <td>{{ composant.quantite }}</td>
+                                            <td>{{ composant.composant }}</td>
+                                            <td>{{ composant.prixHT | format_currency('EUR', locale='fr') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white" style="position: fixed; bottom: 0;">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright">
+                    <span>Copyright © MADERA {{ "now" | date("Y") }}</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

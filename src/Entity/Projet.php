@@ -195,4 +195,20 @@ class Projet
 
         return $this;
     }
+
+    /**
+     * @return array|Module[]
+     */
+    public function getModules(): array
+    {
+        $result = [];
+        foreach ($this->getProduits() as $produit) {
+            $gamme = $produit->getGamme();
+            $modele = $gamme->getModele();
+            foreach ($modele->getModules() as $module) {
+                $result[] = $module;
+            }
+        }
+        return $result;
+    }
 }

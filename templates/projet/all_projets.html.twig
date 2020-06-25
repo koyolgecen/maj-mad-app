@@ -24,7 +24,6 @@
                 <th>Référence</th>
                 <th>Client</th>
                 <th>Produits</th>
-                <th>Modèles</th>
                 <th>Date de création</th>
                 <th>Dernière modification</th>
                 <th>Actions</th>
@@ -37,16 +36,25 @@
                     <td>{{ projet.reference }}</td>
                     <td>{{ projet.client }}</td>
                     <td>{% for produit in projet.produits %}{{ produit.nom }}<br>{% endfor %}</td>
-                    <td>{% for modele in projet.modeles %}{{ modele.nom }}<br>{% endfor %}</td>
                     <td>{{ projet.createdAt | format_datetime(locale='fr') }}</td>
                     <td>{{ projet.updatedAt | format_datetime(locale='fr') }}</td>
                     <td class="text-center">
-                        <a class="btn btn-warning btn-sm"
+                        <a class="btn btn-info btn-sm mr-2"
+                           data-toggle="tooltip" title="Générer le dossier technique du projet - {{ projet }}"
+                           href="{{ path('dossier_technique_generate_pdf', { 'id': projet.id }) }}">
+                            <i class="fas fa-file-pdf fa-sm"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm mr-2"
+                           data-toggle="tooltip" title="Voir les modules à réaliser du projet - {{ projet }}"
+                           href="{{ path('modules_ar', { 'id': projet.id }) }}">
+                            <i class="fas fa-home fa-sm"></i>
+                        </a>
+                        <a class="btn btn-warning btn-sm mr-2"
                            data-toggle="tooltip" title="Modifier {{ projet.type }}"
                            href="{{ path('projet_edit', { 'id': projet.id }) }}">
                             <i class="fas fa-edit fa-sm"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm ml-1 confirm"
+                        <a class="btn btn-danger btn-sm confirm"
                            data-to-delete="{{ projet.type }}"
                            data-toggle="tooltip" title="Supprimer {{ projet.type }}"
                            href="{{ path('projet_delete', { 'id': projet.id }) }}">

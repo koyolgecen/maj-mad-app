@@ -25,11 +25,6 @@ class ModuleARealiser
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $modeConception;
-
-    /**
      * @ORM\Column(type="float")
      */
     private $longueur;
@@ -43,6 +38,16 @@ class ModuleARealiser
      * @ORM\ManyToOne(targetEntity="App\Entity\ModeleARealiser", inversedBy="modules")
      */
     private $modele;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $projetId;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $moduleId;
 
     public function __toString()
     {
@@ -62,18 +67,6 @@ class ModuleARealiser
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getModeConception(): ?string
-    {
-        return $this->modeConception;
-    }
-
-    public function setModeConception(string $modeConception): self
-    {
-        $this->modeConception = $modeConception;
 
         return $this;
     }
@@ -110,6 +103,30 @@ class ModuleARealiser
     public function setModele(?ModeleARealiser $modele): self
     {
         $this->modele = $modele;
+
+        return $this;
+    }
+
+    public function getProjetId(): ?int
+    {
+        return $this->projetId;
+    }
+
+    public function setProjetId(int $projetId): self
+    {
+        $this->projetId = $projetId;
+
+        return $this;
+    }
+
+    public function getModuleId(): ?int
+    {
+        return $this->moduleId;
+    }
+
+    public function setModuleId(int $moduleId): self
+    {
+        $this->moduleId = $moduleId;
 
         return $this;
     }

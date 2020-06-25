@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Projet;
 use App\Form\ProjetType;
+use App\Managers\ModuleARealiserManager;
+use App\Services\ProjetService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +24,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProjetController extends AbstractController
 {
+    /** @var ModuleARealiserManager */
+    private $moduleARealiserManager;
+    /** @var Pdf */
+    private $pdfGenerator;
+    /** @var ProjetService */
+    private $projetService;
+
+    /**
+     * ProjetController constructor.
+     *
+     * @param ModuleARealiserManager $moduleARealiserManager
+     * @param Pdf $pdfGenerator
+     * @param ProjetService $projetService
+     */
+    public function __construct(
+        ModuleARealiserManager $moduleARealiserManager,
+        Pdf $pdfGenerator,
+        ProjetService $projetService
+    ) {
+        $this->moduleARealiserManager = $moduleARealiserManager;
+        $this->pdfGenerator = $pdfGenerator;
+        $this->projetService = $projetService;
+    }
+
     /**
      * @Route("/projets", name="projets")
      */
@@ -31,6 +59,27 @@ class ProjetController extends AbstractController
         return $this->render('projet/all_projets.html.twig', [
             'projets' => $projets
         ]);
+    }
+
+
+
+    /**
+     * @param Projet $projet
+     * @return PdfResponse
+     *
+     * @Route("/dossier-technique-generate-pdf/{id}", name="dossier_technique_generate_pdf")
+     */
+    public function generatePdf(Projet $projet)
+    {
+        $html = $this->renderView('projet/pdf.html.twig', [
+            'projet'  => $projet,
+            'projetDetailled' => $this->projetService->getComposantsDetailled($projet),
+        ]);
+
+        return new PdfResponse(
+            $this->pdfGenerator->getOutputFromHtml($html),
+            sprintf('dossier_technique_%s.pdf', date('dmyHi'))
+        );
     }
 
     /**
@@ -53,8 +102,10 @@ class ProjetController extends AbstractController
             $em->persist($projet);
             $em->flush();
 
+            $this->moduleARealiserManager->createModulesARealiser($projet);
+
             $this->addFlash('success', 'Nouveau projet ajouté!');
-            return $this->redirectToRoute('projets');
+            return $this->redirectToRoute('modules_ar', ['id' => $projet->getId()]);
         }
 
         return $this->render('projet/add.html.twig', [

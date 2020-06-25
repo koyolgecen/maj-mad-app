@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Client;
-use App\Entity\ModeleARealiser;
 use App\Entity\Produit;
 use App\Entity\Projet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -54,20 +53,6 @@ class ProjetType extends AbstractType
                 'placeholder' => 'Choisir',
                 'required' => false,
                 'attr' => $attr
-            ])
-            ->add('modeles', EntityType::class, [
-                'class' => ModeleARealiser::class,
-                'multiple' => true,
-                'required' => false,
-                'attr' => [
-                    'class' => 'selectpicker show-tick',
-                    'multiple' => 'multiple',
-                    'data-live-search' => true,
-                    'data-size' => self::DATA_SIZE,
-                    'title' => 'Choisir',
-                    'data-dropup-auto' => 'false'
-                ],
-                'help' => 'Vous pouvez choisir plusieurs parmis les modèles.'
             ])
 
         ;
