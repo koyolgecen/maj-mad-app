@@ -71,6 +71,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th scope="col">Quantité</th>
                                         <th scope="col">Composant</th>
                                         <th scope="col">Prix HT</th>
                                         <th scope="col">Prix TTC (20%)</th>
@@ -79,6 +80,7 @@
                                     <tbody>
                                     {% for composant in devisDetailled[module.nom] %}
                                         <tr>
+                                            <td>{{ composant.quantite  }}</td>
                                             <td>{{ composant.composant  }}</td>
                                             <td>{{ composant.prixHT | format_currency('EUR', locale='fr') }}</td>
                                             <td>{{ composant.prixTTC | format_currency('EUR', locale='fr') }}</td>

@@ -26,6 +26,7 @@ class DevisService
                 $result[$module->getNom()][$key] = [
                     'composant' => $composant->getNature(),
                     'prixHT' => $prixWithMargeEnt + $prixWithMargeCom,
+                    'quantite' => $module->getQuantite(),
                     'prixTTC' => $this->HTToTTC($prixWithMargeEnt + $prixWithMargeCom),
                     'fournisseurs' => $composant->getFournisseurs()
                 ];
@@ -61,18 +62,24 @@ class DevisService
     private function getPrice(Devis $devis, bool $ttc = false, bool $withMarge = false): ?float
     {
         $result = 0.0;
-        foreach ($devis->getComposants() as $composant) {
-            $prixWithMargeEnt = 0.0;
-            $prixWithMargeCom = 0.0;
-            if ($withMarge) {
-                $prixWithMargeEnt = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeEntreprise());
-                $prixWithMargeCom = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeCommerciale());
+        foreach ($devis->getModules() as $module) {
+            $resultModule = 0.0;
+            foreach ($module->getModuleComposant() as $composant) {
+                $qtt = $module->getQuantite();
+                $prixWithMargeEnt = 0.0;
+                $prixWithMargeCom = 0.0;
+                if ($withMarge) {
+                    $prixWithMargeEnt = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeEntreprise());
+                    $prixWithMargeCom = $this->prixWithMarge($composant->getPrix(), $composant->getMarge()->getMargeCommerciale());
+                }
+                if ($ttc) {
+                    $resultModule += $this->HTToTTC($withMarge ? ($prixWithMargeEnt + $prixWithMargeCom) : $composant->getPrix());
+                } else {
+                    $resultModule += $withMarge ? ($prixWithMargeEnt + $prixWithMargeCom) : $composant->getPrix();
+                }
+                $resultModule *= $qtt;
             }
-            if ($ttc) {
-                $result += $this->HTToTTC($withMarge ? ($prixWithMargeEnt + $prixWithMargeCom) : $composant->getPrix());
-            } else {
-                $result += $withMarge ? ($prixWithMargeEnt + $prixWithMargeCom) : $composant->getPrix();
-            }
+            $result += $resultModule;
         }
         return $result;
     }
