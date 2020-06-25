@@ -26,8 +26,8 @@ class ComposantFixture extends BaseFixture
         $this->createMany(10, 'marge', function() {
             $marge = new Marge();
             $marge->setNom($this->faker->word);
-            $marge->setMargeCommerciale($this->faker->randomFloat(2, 0.01, 1));
-            $marge->setMargeEntreprise($this->faker->randomFloat(2, 0.01, 1));
+            $marge->setMargeCommerciale($this->faker->randomFloat(2, 0.01, 0.5));
+            $marge->setMargeEntreprise($this->faker->randomFloat(2, 0.01, 0.5));
             return $marge;
         });
         $manager->flush();
