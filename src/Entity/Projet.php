@@ -6,12 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjetRepository")
  *
  * @author Clément COURTET <clement.courtet@viacesi.fr>
  * @author Mithat GOKSEN <mithat.goksen@viacesi.fr>
+ *
+ * @UniqueEntity(fields={"reference"})
  */
 class Projet
 {

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Client;
 use App\Entity\Produit;
 use App\Entity\Projet;
+use App\Repository\ProjetRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,10 +14,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjetType extends AbstractType
 {
+    private $projetRepo;
+
+    /**
+     * ProjetType constructor.
+     * @param ProjetRepository $projetRepo
+     */
+    public function __construct(ProjetRepository $projetRepo)
+    {
+        $this->projetRepo = $projetRepo;
+    }
+
     private const DATA_SIZE = 5;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $projets = $this->projetRepo->findBy([], ['id' => 'desc']);
+        if (count($projets)) {
+            $id = end($projets)->getId() + 1;
+        } else {
+            $id = 1;
+        }
         $attr = [
             'class' => 'selectpicker show-tick',
             'data-live-search' => true,
@@ -31,8 +49,9 @@ class ProjetType extends AbstractType
                 ]
             ])
             ->add('reference', TextType::class, [
+                'data' => '#' . $id,
                 'attr' => [
-                    'placeholder' => 'Saisir'
+                    'readonly' => 'readonly'
                 ]
             ])
             ->add('produits', EntityType::class, [

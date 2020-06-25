@@ -18,12 +18,17 @@
                 Le projet, <b>{{ devis.projet }}</b> a été créé le <i>{{ devis.projet.createdAt | format_datetime(locale='fr') }}</i> par <i>{{ devis.vendeur.nom | upper }} {{ devis.vendeur.prenom }}</i> , pour le client, <b>{{ devis.projet.client }}</b>
             </h6>
 
+            {% if devis.etat == constant("App\\Entity\\Devis::ETAT_EN_COMMANDE") %}
+                {% set color = 'info' %}
+            {% elseif devis.etat == constant("App\\Entity\\Devis::ETAT_TRANSFERT_EN_FACTURATION") %}
+                {% set color = 'success' %}
+            {% endif %}
 
-            {% if  devis.etat == constant("App\\Entity\\Devis::ETAT_EN_COMMANDE") or devis.etat == constant("App\\Entity\\Devis::ETAT_TRANSFERT_EN_FACTURATION")%}
-                <div class="alert alert-success mt-5 mb-5 text-center" role="alert">
-                    {% if devis.etat == constant("App\\Entity\\Devis::ETAT_EN_COMMANDE") %}
+            {% if color is defined %}
+                <div class="alert alert-{{ color }} mt-5 mb-5 text-center" role="alert">
+                    {% if color == 'info' %}
                         La commande est passée ! La livraison est en attente...
-                    {% elseif devis.etat == constant("App\\Entity\\Devis::ETAT_TRANSFERT_EN_FACTURATION") %}
+                    {% else %}
                         La livraison est prévue le {{ devis.commande.livraison.dateDeLivraison | format_datetime('long', 'none', locale='fr') }}.
                         <br>
                         Elle sera livrée à l'adresse suivante ;
@@ -35,7 +40,7 @@
             <h4 class="text-center text-dark mt-4">Produits</h4>
             <hr>
             {% for produit in devis.projet.produits %}
-                Produit : {{ produit }}, Gamme : {{ produit.gamme }}
+                Produit : {{ produit }}, Gamme : {{ produit.gamme }}<br>
             {% endfor %}
 
             <h4 class="mt-4 text-dark text-center">Détails du devis</h4>
@@ -56,8 +61,8 @@
                                         <th scope="col">Composant</th>
                                         <th scope="col">CCTP</th>
                                         <th scope="col">Fournisseurs</th>
-                                        <th scope="col">Prix HT</th>
-                                        <th scope="col">Prix TTC (20%)</th>
+                                        <th scope="col">Prix Unitaire HT</th>
+                                        <th scope="col">Prix Unitaire TTC (20%)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
