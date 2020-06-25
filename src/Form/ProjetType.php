@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjetType extends AbstractType
 {
+    /** @var ProjetRepository */
     private $projetRepo;
 
     /**
@@ -29,12 +30,15 @@ class ProjetType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $projets = $this->projetRepo->findBy([], ['id' => 'desc']);
+        $edit = $options['edit'];
+
+        $projets = $this->projetRepo->findBy([], ['id' => 'asc']);
         if (count($projets)) {
             $id = end($projets)->getId() + 1;
         } else {
             $id = 1;
         }
+
         $attr = [
             'class' => 'selectpicker show-tick',
             'data-live-search' => true,
@@ -42,18 +46,21 @@ class ProjetType extends AbstractType
             'data-dropup-auto' => 'false'
         ];
 
+        $attrReference = [
+            'attr' => [
+                'readonly' => 'readonly'
+            ]
+        ];
+
         $builder
             ->add('type', TextType::class, [
+                'label' => 'Nom',
                 'attr' => [
                     'placeholder' => 'Saisir'
                 ]
             ])
-            ->add('reference', TextType::class, [
-                'data' => '#' . $id,
-                'attr' => [
-                    'readonly' => 'readonly'
-                ]
-            ])
+            ->add('reference', TextType::class, $edit ? $attrReference : array_merge([
+                'data' => '#' . $id], $attrReference))
             ->add('produits', EntityType::class, [
                 'class' => Produit::class,
                 'multiple' => true,
@@ -81,6 +88,7 @@ class ProjetType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Projet::class,
+            'edit' => null
         ]);
     }
 }

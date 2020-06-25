@@ -125,7 +125,9 @@ class ProjetController extends AbstractController
      */
     public function edit(Projet $projet, Request $request, EntityManagerInterface $em)
     {
-        $form = $this->createForm(ProjetType::class, $projet);
+        $form = $this->createForm(ProjetType::class, $projet, [
+            'edit' => true
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -53,7 +53,6 @@
                                         <i class="fas fa-calculator"></i>&nbsp;<span>Marges</span>
                                     </a>
                             </li>
-                            <div class="dropdown-divider"></div>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link {% if 'famille_composant' in app.request.get('_route') %}active{% endif %}"
                                    href="{{ path('famille_composants') }}">
@@ -104,16 +103,15 @@
                                     <i class="fas fa-book-open"></i>&nbsp;<span>CCTP</span>
                                 </a>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link {% if 'modules' == app.request.get('_route')
+                                    or 'module_add' == app.request.get('_route')
+                                    or 'module_edit' == app.request.get('_route') %}active{% endif %}"
+                                   href="{{ path('modules') }}">
+                                    <i class="fas fa-cubes"></i>&nbsp;<span>Modules</span>
+                                </a>
+                            </li>
                         {% endif %}
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link {% if 'modules' == app.request.get('_route')
-                                or 'module_add' == app.request.get('_route')
-                                or 'module_edit' == app.request.get('_route') %}active{% endif %}"
-                               href="{{ path('modules') }}">
-                                <i class="fas fa-cubes"></i>&nbsp;<span>Modules</span>
-                            </a>
-                        </li>
-                        <div class="dropdown-divider"></div>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link {% if 'modeles' == app.request.get('_route')
                                 or 'modele_add' == app.request.get('_route')
@@ -220,15 +218,6 @@
                                     {{ iconLabel }}
                                 </span>
                             {% endif %}
-                            <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Rechercher ...">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary py-0" type="button">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
                             <ul class="nav navbar-nav flex-nowrap ml-auto">
                                 <li class="nav-item dropdown d-sm-none no-arrow">
                                     <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">

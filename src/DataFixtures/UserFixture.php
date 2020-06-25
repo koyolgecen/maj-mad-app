@@ -36,12 +36,30 @@ class UserFixture extends BaseFixture
             return $user;
         });
 
+        $adminsInfos = [
+            'koyolgecen' => [
+                'prenom' => 'Konuralp',
+                'nom' => 'Yolgecen'
+            ],
+            'clcourtet' => [
+                'prenom' => 'Clément',
+                'nom' => 'Courtet'
+            ],
+            'vagirard' => [
+                'prenom' => 'Valentin',
+                'nom' => 'Girard'
+            ],
+            'migoksen' => [
+                'prenom' => 'Mithat',
+                'nom' => 'Goksen'
+            ]
+        ];
         $admins = ['koyolgecen', 'clcourtet', 'vagirard', 'migoksen'];
-        $this->createMany(count($admins), 'admin_users', function($i) use ($admins) {
+        $this->createMany(count($admins), 'admin_users', function($i) use ($admins, $adminsInfos) {
             $user = new User();
             $user->setEmail(sprintf("admin_%s@madera.fr", $admins[$i]));
-            $user->setPrenom($this->faker->firstName);
-            $user->setNom($this->faker->lastName);
+            $user->setPrenom($adminsInfos[$admins[$i]]['prenom']);
+            $user->setNom($adminsInfos[$admins[$i]]['nom']);
             $user->setLogin($admins[$i]);
             $user->setPassword($this->passwordEncoder->encodePassword($user, "admin"));
             $user->setRoles([User::ROLE_ADMIN]);

@@ -48,22 +48,26 @@ class GammeType extends AbstractType
                 'attr' => $attr
             ])
             ->add('qualitehuisserie', EntityType::class, [
+                'label' => 'Qualité huisserie',
                 'class' => QualiteHuisserieGamme::class,
                 'placeholder' => 'Choisir',
                 'attr' => $attr
             ])
             ->add('finitionExterieur', EntityType::class, [
+                'label' => 'Finition extérieure',
                 'class' => FinitionExterieurGamme::class,
                 'placeholder' => 'Choisir',
                 'attr' => $attr
             ])
             ->add('modeConception', EntityType::class, [
+                'label' => 'Mode de conception',
                 'class' => ModeConception::class,
                 'placeholder' => 'Choisir',
                 'attr' => $attr,
                 'required' => false
             ])
             ->add('modele', EntityType::class, [
+                'label' => 'Modèle',
                 'class' => Modele::class,
                 'placeholder' => 'Choisir',
                 'attr' => $attr

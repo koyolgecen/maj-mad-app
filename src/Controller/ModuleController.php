@@ -81,7 +81,7 @@ class ModuleController extends AbstractController
             $em->persist($module);
             $em->flush();
 
-            $this->addFlash('success', sprintf('module "%s" modifié avec succès !', $module->getNom()));
+            $this->addFlash('success', sprintf('Module "%s" modifié avec succès !', $module->getNom()));
             return $this->redirectToRoute('modules');
         }
 
