@@ -15,6 +15,9 @@
 
         <h1 class="h3 mb-3 font-weight-normal text-center">Connectez-vous</h1>
         <label for="inputLogin">Identifiant</label>
+        <span class="d-inline-block mb-2" tabindex="0" data-toggle="tooltip" title="Vous n'avez pas de compte !? ZUT ! Aller je vous donne une indice, essayez 'admintest' comme identifiant et 'admin' comme mdp. J'en suis sûr ça va marcher :)">
+            <button class="btn btn-primary btn-sm" style="pointer-events: none;" type="button" disabled><i class="fas fa-question"></i></button>
+        </span>
         <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="form-control" required autofocus>
         <label for="inputPassword" class="mt-2">Mot de passe</label>
         <input type="password" name="password" id="inputPassword" class="form-control" required>

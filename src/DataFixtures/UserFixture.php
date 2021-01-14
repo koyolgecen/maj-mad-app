@@ -52,9 +52,13 @@ class UserFixture extends BaseFixture
             'migoksen' => [
                 'prenom' => 'Mithat',
                 'nom' => 'Goksen'
+            ],
+            'admintest' => [
+                'prenom' => 'Admin',
+                'nom' => 'Test'
             ]
         ];
-        $admins = ['koyolgecen', 'clcourtet', 'vagirard', 'migoksen'];
+        $admins = ['koyolgecen', 'clcourtet', 'vagirard', 'migoksen', 'admintest'];
         $this->createMany(count($admins), 'admin_users', function($i) use ($admins, $adminsInfos) {
             $user = new User();
             $user->setEmail(sprintf("admin_%s@madera.fr", $admins[$i]));
