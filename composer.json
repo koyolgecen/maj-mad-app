@@ -34,10 +34,10 @@
         "symfony/web-server-bundle": "4.4",
         "symfony/yaml": "5.0.*",
         "twig/intl-extra": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fzaninotto/faker": "^1.9"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.9",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^5.1",
