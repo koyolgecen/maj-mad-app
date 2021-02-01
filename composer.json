@@ -4,7 +4,9 @@
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
+        "ext-gd": "^7.2",
         "ext-iconv": "*",
+        "ext-intl": "^1.1",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.9",
         "gedmo/doctrine-extensions": "^2.4",
@@ -83,8 +85,7 @@
             "@auto-scripts"
         ],
         "compile": [
-            "php bin/console doctrine:migrations:migrate --no-interaction",
-            "apt-get install php7.0-intl"
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ]
     },
     "conflict": {
