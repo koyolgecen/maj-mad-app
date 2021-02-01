@@ -83,7 +83,8 @@
             "@auto-scripts"
         ],
         "compile": [
-            "php bin/console doctrine:migrations:migrate --no-interaction"
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "apt-get install php7.0-intl"
         ]
     },
     "conflict": {
